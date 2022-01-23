@@ -567,11 +567,7 @@ elseif tonumber(Message) < 4000 then
 MsgText = 'عوف لجواهر وتفاعل بزودك' 
 elseif tonumber(Message) < 4500 then 
 MsgText = 'قمة التفاعل' 
-elseif tonumber(Message) < 5500 then 
-MsgText = 'شهلتفاعل استمر يكيك' 
-elseif tonumber(Message) < 7000 then 
-MsgText = 'غنبله وربي 🌟' 
-elseif tonumber(Message) < 9500 then 
+elseif tonumber(Message) < 5500ن then 
 MsgText = 'حلغوم مال تفاعل' 
 elseif tonumber(Message) < 10000000000 then 
 MsgText = 'تفاعل نار وشرار'  
@@ -1132,7 +1128,6 @@ end
 end
 end
 end 
-
 if msg.content.luatele == "messageContact" and not msg.Distinguished then  -- الجهات
 local Contact_Group = Redis:get(Revor.."Revor:Lock:Contact"..msg_chat_id)
 if Contact_Group == "del" then
