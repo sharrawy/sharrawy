@@ -45,7 +45,7 @@ sudo luarocks install luasocket
 cd ../..
 rm -rf tmp
 unzip luatele.zip
-sudo lua5.3 alsultan.lua
+sudo lua5.3 Revor.lua
 ;;
 2)
 echo -e "\e[1m\e[32mThe bot is running now : جاري تشغيل البوت الان : \e[0m"
