@@ -2266,7 +2266,7 @@ if not msg.ControllerBot then
 return LuaTele.sendText(msg_chat_id,msg_id,'\n*᯽︙هاذا الامر يخص { '..Controller_Num(1)..' }* ',"md",true)  
 end
 --os.execute('rm -rf KOIA.lua')
---download('https://raw.githubusercontent.com/SourceTheKOIA/TheKOIA/master/KOIA.lua','KOIA.lua')
+--download('https://raw.githubusercontent.com/telethonAr/A1/KOIA.lua','KOIA.lua')
 return LuaTele.sendText(msg_chat_id,msg_id,'\n*᯽︙تم تحديث السورس * ',"md",true)  
 end
 if text == 'جلب النسخه الاحتياطيه ⌔' or text == 'جلب نسخه احتياطيه' then
@@ -6007,6 +6007,26 @@ listall = listall.." ["..UserInfo.first_name.."](tg://user?id="..UserInfo.id..")
 end
 if x == 5 or x == tags or k == 0 then
 LuaTele.sendText(msg_chat_id,msg_id,listall,"md",true)  
+end
+end
+end
+if text == "جمالي" or text == 'نسبه جمالي' then
+if Redis:get(eric.."Status:gamle"..msg.chat_id) then
+local photo = LuaTele.getUserProfilePhotos(msg.sender.user_id)
+if msg.Developers then
+if photo.total_count > 0 then
+return LuaTele.sendPhoto(msg.chat_id, msg.id, photo.photos[1].sizes[#photo.photos[1].sizes].photo.remote.id,"*نسبه جمالك هي 900% عشان مطور ولازم اطبله😹♥*", "md")
+else
+return LuaTele.sendText(msg_chat_id,msg_id,'*● لا توجد صوره ف حسابك*',"md",true) 
+end
+else
+if photo.total_count > 0 then
+local nspp = {"10","20","30","35","75","34","66","82","23","19","55","80","63","32","27","89","99","98","79","100","8","3","6","0",}
+local rdbhoto = nspp[math.random(#nspp)]
+return LuaTele.sendPhoto(msg.chat_id, msg.id, photo.photos[1].sizes[#photo.photos[1].sizes].photo.remote.id,"*نسبه جمالك هي "..rdbhoto.."% 🙄♥*", "md")
+else
+return LuaTele.sendText(msg_chat_id,msg_id,'*● لا توجد صوره ف حسابك*',"md",true) 
+end
 end
 end
 end
