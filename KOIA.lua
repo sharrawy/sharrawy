@@ -6011,7 +6011,7 @@ end
 end
 end
 if text == "جمالي" or text == 'نسبه جمالي' then
-if Redis:get(eric.."Status:gamle"..msg.chat_id) then
+if Redis:get(TheKOIA.."Status:gamle"..msg.chat_id) then
 local photo = LuaTele.getUserProfilePhotos(msg.sender.user_id)
 if msg.Developers then
 if photo.total_count > 0 then
@@ -6059,7 +6059,7 @@ local MSGID = string.gsub(MsgId,'.0','')
 https.request("https://api.telegram.org/bot"..Token..'/sendphoto?chat_id=' .. msg.chat_id .. '&photo=https://t.me/AnimeDavid/'..Abs..'&caption=' .. URL.escape(Text).."&reply_to_message_id="..MsgId.."&parse_mode=markdown") 
 end
 if text == "صورتي" then
-if Redis:get(eric.."Status:photo"..msg.chat_id) then
+if Redis:get(TheKOIA.."Status:photo"..msg.chat_id) then
 local photo = LuaTele.getUserProfilePhotos(msg.sender.user_id)
 if photo.total_count > 0 then
 return LuaTele.sendPhoto(msg.chat_id, msg.id, photo.photos[1].sizes[#photo.photos[1].sizes].photo.remote.id,"*عدد صورك هو "..photo.total_count.." صوره*", "md")
