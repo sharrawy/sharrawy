@@ -4153,7 +4153,7 @@ Redis:set(TheKOIA.."KOIA:Status:Games"..msg_chat_id,true)
 return LuaTele.sendText(msg_chat_id,msg_id,"᯽︙تم تفعيل الالعاب ","md",true)
 end
 if TextMsg == 'صورتي' then
-Redis:set(eric.."KOIA:Status:photo"..msg_chat_id,true) 
+Redis:set(TheKOIA.."KOIA:Status:photo"..msg_chat_id,true) 
 return LuaTele.sendText(msg_chat_id,msg_id,"᯽︙ تم تفعيل صورتي ","md",true)
 end
 if TextMsg == 'اطردني' then
@@ -4594,7 +4594,7 @@ Redis:del(TheKOIA.."KOIA:Status:SetId"..msg_chat_id)
 return LuaTele.sendText(msg_chat_id,msg_id,"᯽︙تم تعطيل الرفع ","md",true)
 end
 if TextMsg == 'صورتي' then
-Redis:del(eric.."KOIA:Status:photo"..msg_chat_id) 
+Redis:del(TheKOIA.."KOIA:Status:photo"..msg_chat_id) 
 return LuaTele.sendText(msg_chat_id,msg_id,"᯽︙ تم تعطيل صورتي ","md",true)
 end
 if TextMsg == 'الالعاب' then
