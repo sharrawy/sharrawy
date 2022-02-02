@@ -6058,7 +6058,16 @@ local MsgId = msg.id/2097152/0.5
 local MSGID = string.gsub(MsgId,'.0','')
 https.request("https://api.telegram.org/bot"..Token..'/sendphoto?chat_id=' .. msg.chat_id .. '&photo=https://t.me/AnimeDavid/'..Abs..'&caption=' .. URL.escape(Text).."&reply_to_message_id="..MsgId.."&parse_mode=markdown") 
 end
-
+if text == "صورتي" then
+if Redis:get(eric.."Status:photo"..msg.chat_id) then
+local photo = LuaTele.getUserProfilePhotos(msg.sender.user_id)
+if photo.total_count > 0 then
+return LuaTele.sendPhoto(msg.chat_id, msg.id, photo.photos[1].sizes[#photo.photos[1].sizes].photo.remote.id,"*عدد صورك هو "..photo.total_count.." صوره*", "md")
+else
+return LuaTele.sendText(msg_chat_id,msg_id,'*● لا توجد صوره ف حسابك*',"md",true) 
+end
+end
+end
 if text == "صوره" or text == "صورة" then 
 Abs = math.random(2,140); 
 local Text ='*✯︙تم اختيار صوره لك*'
