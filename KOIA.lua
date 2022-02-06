@@ -4489,7 +4489,7 @@ if text == "تعطيل اليوتيوب" then
 if not msg.Managers then
 return LuaTele.sendText(msg_chat_id,msg_id,'\n*◍ هاذا الامر يخص { '..Controller_Num(6)..' }* ',"md",true)  
 end
-Redis:del(TheNova.."KOIA:Status:yt"..msg.chat_id)
+Redis:del(TheKOIA.."KOIA:Status:yt"..msg.chat_id)
  LuaTele.sendText(msg_chat_id,msg_id,'◍ تم تعطيل المسح اليوتيوب')
 return false
 end 
@@ -4497,11 +4497,11 @@ if text == "تفعيل اليوتيوب" then
 if not msg.Managers then
 return LuaTele.sendText(msg_chat_id,msg_id,'\n*◍ هاذا الامر يخص { '..Controller_Num(6)..' }* ',"md",true)  
 end
-Redis:set(TheNova.."KOIA:Status:yt"..msg.chat_id,true)
+Redis:set(TheKOIA.."KOIA:Status:yt"..msg.chat_id,true)
 LuaTele.sendText(msg_chat_id,msg_id,'◍ تم تفعيل اليوتيوب')
 return false
 end 
-if text and text:match('^بحث (.*)$') and Redis:get(TheNova.."KOIA:Status:yt"..msg.chat_id) then
+if text and text:match('^بحث (.*)$') and Redis:get(TheKOIA.."KOIA:Status:yt"..msg.chat_id) then
 local Ttext = text:match('^بحث (.*)$') 
 local MsgId = msg.id/2097152/0.5
 local MSGID = string.gsub(MsgId,'.0','')
@@ -9065,7 +9065,6 @@ end
 end
 end
 if text == 'السورس' or text == 'سورس' or text == 'يا سورس' or text == 'source' then
-photo = "https://t.me/nooor/4037"
 local T =[[
 ╔━━━━━━━━━━━╗ 
 ┇   TelethonArab    ┇ 
@@ -9083,21 +9082,21 @@ keyboard.inline_keyboard = {
 }
 local msgg = msg_id/2097152/0.5
 https.request("https://api.telegram.org/bot"..Token.."/sendphoto?chat_id=" .. msg_chat_id .. "&photo="..photo.."&caption=".. URL.escape(T).."&reply_to_message_id="..msgg.."&parse_mode=markdown&disable_web_page_preview=true&reply_markup="..JSON.encode(keyboard))
-if Redis:get(TheNova.."youtube"..msg.sender.user_id..msg_chat_id) == "mp3" then
+if Redis:get(TheKOIA.."youtube"..msg.sender.user_id..msg_chat_id) == "mp3" then
 local rep = msg.id/2097152/0.5
 local m = rep +1
 https.request("https://api.telegram.org/bot"..Token.."/sendAnimation?chat_id="..msg_chat_id.."&animation=https://t.me/youtube7odabot/7951&reply_to_message_id="..rep)
 https.request("https://api.medooo.ml/leomedo/yt?text="..URL.escape(text).."&token="..Token.."&msg_id="..rep.."&chat_id="..msg_chat_id.."&type=mp3")
 https.request("https://api.telegram.org/bot"..Token.."/deleteMessage?chat_id="..msg_chat_id.."&message_id="..m)
-Redis:del(TheNova.."youtube"..msg.sender.user_id..msg_chat_id)
+Redis:del(TheKOIA.."youtube"..msg.sender.user_id..msg_chat_id)
 end
-if Redis:get(TheNova.."youtube"..msg.sender.user_id..msg_chat_id) == "mp4" then
+if Redis:get(TheKOIA.."youtube"..msg.sender.user_id..msg_chat_id) == "mp4" then
 local rep = msg.id/2097152/0.5
 local m = rep +1
 https.request("https://api.telegram.org/bot"..Token.."/sendAnimation?chat_id="..msg_chat_id.."&animation=https://t.me/youtube7odabot/7951&reply_to_message_id="..rep)
 https.request("https://api.medooo.ml/leomedo/yt?text="..URL.escape(text).."&token="..Token.."&msg_id="..rep.."&chat_id="..msg_chat_id.."&type=mp4")
 https.request("https://api.telegram.org/bot"..Token.."/deleteMessage?chat_id="..msg_chat_id.."&message_id="..m)
-Redis:del(TheNova.."youtube"..msg.sender.user_id..msg_chat_id)
+Redis:del(TheKOIA.."youtube"..msg.sender.user_id..msg_chat_id)
 end
 if text == "يوتيوب" then
 local reply_markup = LuaTele.replyMarkup{
