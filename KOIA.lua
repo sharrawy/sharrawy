@@ -9065,11 +9065,8 @@ end
 end
 end
 if text == 'السورس' or text == 'سورس' or text == 'يا سورس' or text == 'source' then
-local T =[[
-╔━━━━━━━━━━━╗ 
-┇   TelethonArab    ┇ 
-╚━━━━━━━━━━━╝ 
-]]
+photo = "https://t.me/nooor/4037"
+local T =[[----------]]
 keyboard = {} 
 keyboard.inline_keyboard = {
 
