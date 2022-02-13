@@ -4375,67 +4375,23 @@ end
 return false  
 end  
 end
-if text then
-local Text = Redis:get(TheSharrawy.."Sharrawy11:Add:Rd:Sudo:Text"..text)   
-local Text1 = Redis:get(TheSharrawy.."Sharrawy11:Add:Rd:Sudo:Text1"..text)   
-local Text2 = Redis:get(TheSharrawy.."Sharrawy11:Add:Rd:Sudo:Text2"..text)   
-if Text or Text1 or Text2 then 
-local texting = {
-Text,
-Text1,
-Text2
-}
-Textes = math.random(#texting)
- LuaTele.sendText(msg_chat_id,msg_id,texting[Textes])
-end
-end
- if text and text:match("^وضع عدد المسح (.*)$") and TheBasics(msg) then
-local Teext = text:match("^وضع عدد المسح (.*)$") 
-if Teext and Teext:match('%d+') then
-t = "- تم تعيين  ( "..Teext.." ) كعدد للحذف التلقائي ."
-redis:set(TheSharrawy..":mediaAude:utdl"..msg.chat_id,Teext)
-else
-t = "- عذرا يجب كتاب ( وضع عدد المسح + رقم ) ."
-end
-bot.sendText(msg.chat_id,msg.id,Reply_Status(msg.sender.user_id,t).yu,"md",true)
-end
-if msg and msg.content then
-if msg.content.luatele == "messageSticker" or msg.content.luatele == "messageContact" or msg.content.luatele == "messageVideoNote" or msg.content.luatele == "messageDocument" or msg.content.luatele == "messageVideo" or msg.content.luatele == "messageAnimation" or msg.content.luatele == "messagePhoto" then
-redis:sadd(TheSharrawy..":"..msg.chat_id..":Sharrawy:allM",msg.id)  
-end
-if redis:get(TheSharrawy..":"..msg.chat_id..":settings:mediaAude") then
-local gmedia = redis:scard(TheSharrawy..":"..msg.chat_id..":Sharrawy:allM")  
-if gmedia >= tonumber(redis:get(TheSharrawy..":mediaAude:utdl"..msg.chat_id) or 200) then
-local liste = redis:smembers(TheSharrawy..":"..msg.chat_id..":Sharrawy:allM")
+if msg.content.video_note or msg.content.document or msg.content.audio or msg.content.video or msg.content.voice_note or msg.content.sticker or msg.content.animation or msg.content.photo then      
+Redis:sadd(TheSharrawy.."Sharrawy:allM"..msg.chat_id, msg.id)
+if Redis:get(TheSharrawy.."Sharrawy:Status:Del:Media"..msg.chat_id) then    
+local gmedia = Redis:scard(TheSharrawy.."Sharrawy:allM"..msg.chat_id)  
+if gmedia >= 20 then
+local liste = Redis:smembers(TheSharrawy.."Sharrawy:allM"..msg.chat_id)
 for k,v in pairs(liste) do
 local Mesge = v
 if Mesge then
-t = "- تم مسح "..k.." من الوسائط تلقائيا\n- يمكنك تعطيل الميزه بستخدام الامر ( تعطيل المسح التلقائي )"
-bot.deleteMessages(msg.chat_id,{[1]= Mesge})
+t = "⋄︙تم مسح "..k.." من الوسائط تلقائيا\n⋄︙يمكنك تعطيل الميزه بستخدام الامر ( `تعطيل المسح التلقائي` )"
+LuaTele.deleteMessages(msg.chat_id,{[1]= Mesge})
 end
 end
-bot.sendText(msg.chat_id,msg.id,t,"md",true)
-redis:del(TheSharrawy..":"..msg.chat_id..":Sharrawy:allM")
+LuaTele.sendText(msg_chat_id,msg_id, t)
+Redis:del(TheSharrawy.."Sharrawy:allM"..msg.chat_id)
 end
 end
-end
-if text == 'تفعيل المسح التلقائي' and TheBasics(msg) then   
-if redis:get(TheSharrawy..":"..msg.chat_id..":settings:mediaAude") then
-Text = Reply_Status(msg.sender.user_id,"*- تم "..text.." سابقا .*").yu
-else
-Text = Reply_Status(msg.sender.user_id,"*- تم "..text.." بنجاح .*").by
-redis:set(TheSharrawy..":"..msg.chat_id..":settings:mediaAude",true)  
-end
-bot.sendText(msg.chat_id,msg.id,Text,"md",true)
-end
-if text == 'تعطيل المسح التلقائي' and TheBasics(msg) then  
-if not redis:get(TheSharrawy..":"..msg.chat_id..":settings:mediaAude") then
-Text = Reply_Status(msg.sender.user_id,"*- تم "..text.." سابقا .*").yu
-else
-Text = Reply_Status(msg.sender.user_id,"*- تم "..text.." بنجاح .*").by
-redis:del(TheSharrawy..":"..msg.chat_id..":settings:mediaAude")  
-end
-bot.sendText(msg.chat_id,msg.id,Text,"md",true)
 end
 
 if text == ("امسح") then  
