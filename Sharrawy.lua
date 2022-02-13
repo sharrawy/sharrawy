@@ -1505,29 +1505,12 @@ if text or msg.content.video_note or msg.content.document or msg.content.audio o
 local test = Redis:get(TheSharrawy.."Sharrawy:Text:Manager"..msg.sender.user_id..":"..msg_chat_id.."")
 if Redis:get(TheSharrawy.."Sharrawy:Set:Manager:rd"..msg.sender.user_id..":"..msg_chat_id) == "true1" then
 Redis:del(TheSharrawy.."Sharrawy:Set:Manager:rd"..msg.sender.user_id..":"..msg_chat_id)
-if msg.content.sticker then   
-Redis:set(TheSharrawy.."Sharrawy:Add:Rd:Manager:Stekrs"..test..msg_chat_id, msg.content.sticker.sticker.remote.id)  
-end   
-if msg.content.voice_note then  
-Redis:set(TheSharrawy.."Sharrawy:Add:Rd:Manager:Vico"..test..msg_chat_id, msg.content.voice_note.voice.remote.id)  
-end   
 if text then   
 text = text:gsub('"',"") 
 text = text:gsub('"',"") 
 text = text:gsub("`","") 
 text = text:gsub("*","") 
 Redis:set(TheSharrawy.."Sharrawy:Add:Rd:Manager:Text"..test..msg_chat_id, text)  
-end  
-if msg.content.photo then
-if msg.content.photo.sizes[1].photo.remote.id then
-idPhoto = msg.content.photo.sizes[1].photo.remote.id
-elseif msg.content.photo.sizes[2].photo.remote.id then
-idPhoto = msg.content.photo.sizes[2].photo.remote.id
-elseif msg.content.photo.sizes[3].photo.remote.id then
-idPhoto = msg.content.photo.sizes[3].photo.remote.id
-end
-print(idPhoto)
-Redis:set(TheSharrawy.."Sharrawy:Add:Rd:Manager:Photo"..test..msg_chat_id, idPhoto)  
 end
 return LuaTele.sendText(msg_chat_id,msg_id,"⋄︙تم حفظ رد للمدير بنجاح \n⋄︙ارسل ( "..test.." ) لرئية الرد","md",true)  
 end  
@@ -1536,20 +1519,10 @@ if text and text:match("^(.*)$") then
 if Redis:get(TheSharrawy.."Sharrawy:Set:Manager:rd"..msg.sender.user_id..":"..msg_chat_id) == "true" then
 Redis:set(TheSharrawy.."Sharrawy:Set:Manager:rd"..msg.sender.user_id..":"..msg_chat_id,"true1")
 Redis:set(TheSharrawy.."Sharrawy:Text:Manager"..msg.sender.user_id..":"..msg_chat_id, text)
-Redis:del(TheSharrawy.."Sharrawy:Add:Rd:Manager:Gif"..text..msg_chat_id)   
-Redis:del(TheSharrawy.."Sharrawy:Add:Rd:Manager:Vico"..text..msg_chat_id)   
-Redis:del(TheSharrawy.."Sharrawy:Add:Rd:Manager:Stekrs"..text..msg_chat_id)     
 Redis:del(TheSharrawy.."Sharrawy:Add:Rd:Manager:Text"..text..msg_chat_id)   
-Redis:del(TheSharrawy.."Sharrawy:Add:Rd:Manager:Photo"..text..msg_chat_id)
-Redis:del(TheSharrawy.."Sharrawy:Add:Rd:Manager:Video"..text..msg_chat_id)
-Redis:del(TheSharrawy.."Sharrawy:Add:Rd:Manager:File"..text..msg_chat_id)
-Redis:del(TheSharrawy.."Sharrawy:Add:Rd:Manager:video_note"..text..msg_chat_id)
-Redis:del(TheSharrawy.."Sharrawy:Add:Rd:Manager:Audio"..text..msg_chat_id)
 Redis:sadd(TheSharrawy.."Sharrawy:List:Manager"..msg_chat_id.."", text)
 LuaTele.sendText(msg_chat_id,msg_id,[[
-↯︙ارسل لي الرد سواء كان 
-❨ ملف • ملصق • متحركه • صوره
- • فيديو • بصمه الفيديو • بصمه • صوت • رساله ❩
+
 ↯︙يمكنك اضافة الى النص •
 — — — — — — — — —
  `#username` ↬ معرف المستخدم
@@ -1565,15 +1538,7 @@ end
 end
 if text and text:match("^(.*)$") then
 if Redis:get(TheSharrawy.."Sharrawy:Set:Manager:rd"..msg.sender.user_id..":"..msg_chat_id.."") == "true2" then
-Redis:del(TheSharrawy.."Sharrawy:Add:Rd:Manager:Gif"..text..msg_chat_id)   
-Redis:del(TheSharrawy.."Sharrawy:Add:Rd:Manager:Vico"..text..msg_chat_id)   
-Redis:del(TheSharrawy.."Sharrawy:Add:Rd:Manager:Stekrs"..text..msg_chat_id)     
 Redis:del(TheSharrawy.."Sharrawy:Add:Rd:Manager:Text"..text..msg_chat_id)   
-Redis:del(TheSharrawy.."Sharrawy:Add:Rd:Manager:Photo"..text..msg_chat_id)
-Redis:del(TheSharrawy.."Sharrawy:Add:Rd:Manager:Video"..text..msg_chat_id)
-Redis:del(TheSharrawy.."Sharrawy:Add:Rd:Manager:File"..text..msg_chat_id)
-Redis:del(TheSharrawy.."Sharrawy:Add:Rd:Manager:Audio"..text..msg_chat_id)
-Redis:del(TheSharrawy.."Sharrawy:Add:Rd:Manager:video_note"..text..msg_chat_id)
 Redis:del(TheSharrawy.."Sharrawy:Set:Manager:rd"..msg.sender.user_id..":"..msg_chat_id)
 Redis:srem(TheSharrawy.."Sharrawy:List:Manager"..msg_chat_id.."", text)
 LuaTele.sendText(msg_chat_id,msg_id,"⋄︙تم حذف الرد من ردود المدير ","md",true)  
@@ -1644,24 +1609,6 @@ local Texingt = Texingt:gsub('#edit',NumMessageEdit)
 local Texingt = Texingt:gsub('#msgs',NumMsg)
 local Texingt = Texingt:gsub('#stast',Status_Gps)
 LuaTele.sendText(msg_chat_id,msg_id,Texingt,"md",true)  
-end
-if video_note then
-LuaTele.sendVideoNote(msg_chat_id, msg.id, video_note)
-end
-if photo then
-LuaTele.sendPhoto(msg.chat_id, msg.id, photo,'')
-end  
-if stekr then 
-LuaTele.sendSticker(msg_chat_id, msg.id, stekr)
-end
-if veico then 
-LuaTele.sendVoiceNote(msg_chat_id, msg.id, veico, '', 'md')
-end
-if video then 
-LuaTele.sendVideo(msg_chat_id, msg.id, video, '', "md")
-end
-if anemi then 
-LuaTele.sendAnimation(msg_chat_id,msg.id, anemi, '', 'md')
 end
 if document then
 LuaTele.sendDocument(msg_chat_id, msg.id, document, '', 'md')
@@ -4105,7 +4052,7 @@ Redis:set(TheSharrawy.."Sharrawy:Status:Welcome"..msg_chat_id,true)
 return LuaTele.sendText(msg_chat_id,msg_id,"⋄︙تم تفعيل الترحيب ","md",true)
 end
 if TextMsg == 'الايدي' then
-if not msg.Developer then
+if not msg.ControllerBot then
 return LuaTele.sendText(msg_chat_id,msg_id,'\n*⋄︙هاذا الامر يخص { '..Controller_Num(1)..' }* ',"md",true)  
 end
 if ChannelJoin(msg) == false then
@@ -4116,7 +4063,7 @@ Redis:set(TheSharrawy.."Sharrawy:Status:Id"..msg_chat_id,true)
 return LuaTele.sendText(msg_chat_id,msg_id,"⋄︙تم تفعيل الايدي ","md",true)
 end
 if TextMsg == 'الايدي بالصوره' then
-if not msg.Developer then
+if not msg.ControllerBot then
 return LuaTele.sendText(msg_chat_id,msg_id,'\n*⋄︙هاذا الامر يخص { '..Controller_Num(1)..' }* ',"md",true)  
 end
 if ChannelJoin(msg) == false then
@@ -4546,7 +4493,7 @@ Redis:del(TheSharrawy.."Sharrawy:Status:Welcome"..msg_chat_id)
 return LuaTele.sendText(msg_chat_id,msg_id,"⋄︙تم تعطيل الترحيب ","md",true)
 end
 if TextMsg == 'الايدي' then
-if not msg.Developer then
+if not msg.ControllerBot then
 return LuaTele.sendText(msg_chat_id,msg_id,'\n*⋄︙هاذا الامر يخص { '..Controller_Num(1)..' }* ',"md",true)  
 end
 if ChannelJoin(msg) == false then
@@ -4557,7 +4504,7 @@ Redis:del(TheSharrawy.."Sharrawy:Status:Id"..msg_chat_id)
 return LuaTele.sendText(msg_chat_id,msg_id,"⋄︙تم تعطيل الايدي ","md",true)
 end
 if TextMsg == 'الايدي بالصوره' then
-if not msg.Developer then
+if not msg.ControllerBot then
 return LuaTele.sendText(msg_chat_id,msg_id,'\n*⋄︙هاذا الامر يخص { '..Controller_Num(1)..' }* ',"md",true)  
 end
 if ChannelJoin(msg) == false then
@@ -12484,4 +12431,3 @@ end
 
 luatele.run(CallBackLua)
  
-
