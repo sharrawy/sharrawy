@@ -4169,6 +4169,7 @@ return LuaTele.sendText(msg.chat_id,msg.id,'*\n⋄︙عليك الاشتراك �
 end
 Redis:set(TheSharrawy.."Sharrawy:Status:SetId"..msg_chat_id,true) 
 return LuaTele.sendText(msg_chat_id,msg_id,"⋄︙تم تفعيل الرفع ","md",true)
+end
 if TextMsg == 'صورتي' then
 Redis:set(TheSharrawy.."Sharrawy:Status:photo"..msg_chat_id,true) 
 return LuaTele.sendText(msg_chat_id,msg_id,"⋄︙ تم تفعيل صورتي ","md",true)
@@ -12483,5 +12484,4 @@ end
 
 luatele.run(CallBackLua)
  
-
 
