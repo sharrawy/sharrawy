@@ -156,6 +156,8 @@ elseif UserId == 307768014 then
 Status = 'مطور السورس'
 elseif UserId == 643167431 then
 Status = 'مطور السورس'
+elseif UserId == 1226408155 then
+Status = 'مطور السورس'
 elseif UserId == Sudo_Id then  
 Status = 'المطور الاساسي'
 elseif UserId == TheSharrawy then
@@ -1516,21 +1518,6 @@ text = text:gsub("`","")
 text = text:gsub("*","") 
 Redis:set(TheSharrawy.."Sharrawy:Add:Rd:Manager:Text"..test..msg_chat_id, text)  
 end  
-if msg.content.audio then
-Redis:set(TheSharrawy.."Sharrawy:Add:Rd:Manager:Audio"..test..msg_chat_id, msg.content.audio.audio.remote.id)  
-end
-if msg.content.document then
-Redis:set(TheSharrawy.."Sharrawy:Add:Rd:Manager:File"..test..msg_chat_id, msg.content.document.document.remote.id)  
-end
-if msg.content.animation then
-Redis:set(TheSharrawy.."Sharrawy:Add:Rd:Manager:Gif"..test..msg_chat_id, msg.content.animation.animation.remote.id)  
-end
-if msg.content.video_note then
-Redis:set(TheSharrawy.."Sharrawy:Add:Rd:Manager:video_note"..test..msg_chat_id, msg.content.video_note.video.remote.id)  
-end
-if msg.content.video then
-Redis:set(TheSharrawy.."Sharrawy:Add:Rd:Manager:Video"..test..msg_chat_id, msg.content.video.video.remote.id)  
-end
 if msg.content.photo then
 if msg.content.photo.sizes[1].photo.remote.id then
 idPhoto = msg.content.photo.sizes[1].photo.remote.id
@@ -1594,15 +1581,7 @@ return false
 end
 end
 if text and Redis:get(TheSharrawy.."Sharrawy:Status:ReplySudo"..msg_chat_id) then
-local anemi = Redis:get(TheSharrawy.."Sharrawy:Add:Rd:Sudo:Gif"..text)   
-local veico = Redis:get(TheSharrawy.."Sharrawy:Add:Rd:Sudo:vico"..text)   
-local stekr = Redis:get(TheSharrawy.."Sharrawy:Add:Rd:Sudo:stekr"..text)     
 local Text = Redis:get(TheSharrawy.."Sharrawy:Add:Rd:Sudo:Text"..text)   
-local photo = Redis:get(TheSharrawy.."Sharrawy:Add:Rd:Sudo:Photo"..text)
-local video = Redis:get(TheSharrawy.."Sharrawy:Add:Rd:Sudo:Video"..text)
-local document = Redis:get(TheSharrawy.."Sharrawy:Add:Rd:Sudo:File"..text)
-local audio = Redis:get(TheSharrawy.."Sharrawy:Add:Rd:Sudo:Audio"..text)
-local video_note = Redis:get(TheSharrawy.."Sharrawy:Add:Rd:Sudo:video_note"..text)
 if Text then 
 local UserInfo = LuaTele.getUser(msg.sender.user_id)
 local NumMsg = Redis:get(TheSharrawy..'Sharrawy:Num:Message:User'..msg_chat_id..':'..msg.sender.user_id) or 0
@@ -1711,28 +1690,6 @@ text = text:gsub("`","")
 text = text:gsub("*","") 
 Redis:set(TheSharrawy.."Sharrawy:Add:Rd:Sudo:Text"..test, text)  
 end  
-if msg.content.audio then
-Redis:set(TheSharrawy.."Sharrawy:Add:Rd:Sudo:Audio"..test, msg.content.audio.audio.remote.id)  
-end
-if msg.content.document then
-Redis:set(TheSharrawy.."Sharrawy:Add:Rd:Sudo:File"..test, msg.content.document.document.remote.id)  
-end
-if msg.content.video then
-Redis:set(TheSharrawy.."Sharrawy:Add:Rd:Sudo:Video"..test, msg.content.video.video.remote.id)  
-end
-if msg.content.video_note then
-Redis:set(TheSharrawy.."Sharrawy:Add:Rd:Sudo:video_note"..test..msg_chat_id, msg.content.video_note.video.remote.id)  
-end
-if msg.content.photo then
-if msg.content.photo.sizes[1].photo.remote.id then
-idPhoto = msg.content.photo.sizes[1].photo.remote.id
-elseif msg.content.photo.sizes[2].photo.remote.id then
-idPhoto = msg.content.photo.sizes[2].photo.remote.id
-elseif msg.content.photo.sizes[3].photo.remote.id then
-idPhoto = msg.content.photo.sizes[3].photo.remote.id
-end
-Redis:set(TheSharrawy.."Sharrawy:Add:Rd:Sudo:Photo"..test, idPhoto)  
-end
 LuaTele.sendText(msg_chat_id,msg_id,"⋄︙تم حفظ رد للمطور \n⋄︙ارسل ( "..test.." ) لرئية الرد","md",true)  
 return false
 end  
@@ -2276,7 +2233,7 @@ if not msg.ControllerBot then
 return LuaTele.sendText(msg_chat_id,msg_id,'\n*⋄︙هاذا الامر يخص { '..Controller_Num(1)..' }* ',"md",true)  
 end
 --os.execute('rm -rf Sharrawy.lua')
---download('https://raw.githubusercontent.com/Sharrawy/A/Sharrawy.lua','Sharrawy.lua')
+--download('https://raw.githubusercontent.com/Sharrawy/sharrawy/Sharrawy.lua','Sharrawy.lua')
 return LuaTele.sendText(msg_chat_id,msg_id,'\n*⋄︙تم تحديث السورس * ',"md",true)  
 end
 if text == 'جلب النسخه الاحتياطيه ⋄' or text == 'جلب نسخه احتياطيه' then
@@ -4148,8 +4105,8 @@ Redis:set(TheSharrawy.."Sharrawy:Status:Welcome"..msg_chat_id,true)
 return LuaTele.sendText(msg_chat_id,msg_id,"⋄︙تم تفعيل الترحيب ","md",true)
 end
 if TextMsg == 'الايدي' then
-if not msg.Managers then
-return LuaTele.sendText(msg_chat_id,msg_id,'\n*⋄︙هاذا الامر يخص { '..Controller_Num(6)..' }* ',"md",true)  
+if not msg.Developer then
+return LuaTele.sendText(msg_chat_id,msg_id,'\n*⋄︙هاذا الامر يخص { '..Controller_Num(1)..' }* ',"md",true)  
 end
 if ChannelJoin(msg) == false then
 local reply_markup = LuaTele.replyMarkup{type = 'inline',data = {{{text = 'اضغط للاشتراك', url = 't.me/'..Redis:get(TheSharrawy..'Sharrawy:Channel:Join')}, },}}
@@ -4159,8 +4116,8 @@ Redis:set(TheSharrawy.."Sharrawy:Status:Id"..msg_chat_id,true)
 return LuaTele.sendText(msg_chat_id,msg_id,"⋄︙تم تفعيل الايدي ","md",true)
 end
 if TextMsg == 'الايدي بالصوره' then
-if not msg.Managers then
-return LuaTele.sendText(msg_chat_id,msg_id,'\n*⋄︙هاذا الامر يخص { '..Controller_Num(6)..' }* ',"md",true)  
+if not msg.Developer then
+return LuaTele.sendText(msg_chat_id,msg_id,'\n*⋄︙هاذا الامر يخص { '..Controller_Num(1)..' }* ',"md",true)  
 end
 if ChannelJoin(msg) == false then
 local reply_markup = LuaTele.replyMarkup{type = 'inline',data = {{{text = 'اضغط للاشتراك', url = 't.me/'..Redis:get(TheSharrawy..'Sharrawy:Channel:Join')}, },}}
@@ -4212,11 +4169,6 @@ return LuaTele.sendText(msg.chat_id,msg.id,'*\n⋄︙عليك الاشتراك �
 end
 Redis:set(TheSharrawy.."Sharrawy:Status:SetId"..msg_chat_id,true) 
 return LuaTele.sendText(msg_chat_id,msg_id,"⋄︙تم تفعيل الرفع ","md",true)
-end
-if TextMsg == 'الالعاب' then
-Redis:set(TheSharrawy.."Sharrawy:Status:Games"..msg_chat_id,true) 
-return LuaTele.sendText(msg_chat_id,msg_id,"⋄︙تم تفعيل الالعاب ","md",true)
-end
 if TextMsg == 'صورتي' then
 Redis:set(TheSharrawy.."Sharrawy:Status:photo"..msg_chat_id,true) 
 return LuaTele.sendText(msg_chat_id,msg_id,"⋄︙ تم تفعيل صورتي ","md",true)
@@ -4494,7 +4446,7 @@ if msg.content.video_note or msg.content.document or msg.content.audio or msg.co
 Redis:sadd(TheSharrawy.."Sharrawy:allM"..msg.chat_id, msg.id)
 if Redis:get(TheSharrawy.."Sharrawy:Status:Del:Media"..msg.chat_id) then    
 local gmedia = Redis:scard(TheSharrawy.."Sharrawy:allM"..msg.chat_id)  
-if gmedia >= 200 then
+if gmedia >= 20 then
 local liste = Redis:smembers(TheSharrawy.."Sharrawy:allM"..msg.chat_id)
 for k,v in pairs(liste) do
 local Mesge = v
@@ -4593,8 +4545,8 @@ Redis:del(TheSharrawy.."Sharrawy:Status:Welcome"..msg_chat_id)
 return LuaTele.sendText(msg_chat_id,msg_id,"⋄︙تم تعطيل الترحيب ","md",true)
 end
 if TextMsg == 'الايدي' then
-if not msg.Managers then
-return LuaTele.sendText(msg_chat_id,msg_id,'\n*⋄︙هاذا الامر يخص { '..Controller_Num(6)..' }* ',"md",true)  
+if not msg.Developer then
+return LuaTele.sendText(msg_chat_id,msg_id,'\n*⋄︙هاذا الامر يخص { '..Controller_Num(1)..' }* ',"md",true)  
 end
 if ChannelJoin(msg) == false then
 local reply_markup = LuaTele.replyMarkup{type = 'inline',data = {{{text = 'اضغط للاشتراك', url = 't.me/'..Redis:get(TheSharrawy..'Sharrawy:Channel:Join')}, },}}
@@ -4604,8 +4556,8 @@ Redis:del(TheSharrawy.."Sharrawy:Status:Id"..msg_chat_id)
 return LuaTele.sendText(msg_chat_id,msg_id,"⋄︙تم تعطيل الايدي ","md",true)
 end
 if TextMsg == 'الايدي بالصوره' then
-if not msg.Managers then
-return LuaTele.sendText(msg_chat_id,msg_id,'\n*⋄︙هاذا الامر يخص { '..Controller_Num(6)..' }* ',"md",true)  
+if not msg.Developer then
+return LuaTele.sendText(msg_chat_id,msg_id,'\n*⋄︙هاذا الامر يخص { '..Controller_Num(1)..' }* ',"md",true)  
 end
 if ChannelJoin(msg) == false then
 local reply_markup = LuaTele.replyMarkup{type = 'inline',data = {{{text = 'اضغط للاشتراك', url = 't.me/'..Redis:get(TheSharrawy..'Sharrawy:Channel:Join')}, },}}
@@ -7994,7 +7946,7 @@ return LuaTele.sendText(msg_chat_id, msg_id, "⋄︙ الصلاحيات - ", 'md
 end
 if text == 'تنزيل الكل' and msg.reply_to_message_id ~= 0 then
 if not msg.Addictive then
-return LuaTele.sendText(msg_chat_id,msg_id,'\n*⋄︙هاذا الامر يخص { '..Controller_Num(7)..' }* ',"md",true)  
+return LuaTele.sendText(msg_chat_id,msg_id,'\n*⋄︙هاذا الامر يخص { '..Controller_Num(1)..' }* ',"md",true)  
 end
 if ChannelJoin(msg) == false then
 local reply_markup = LuaTele.replyMarkup{type = 'inline',data = {{{text = 'اضغط للاشتراك', url = 't.me/'..Redis:get(TheSharrawy..'Sharrawy:Channel:Join')}, },}}
@@ -8093,7 +8045,7 @@ end
 if text and text:match('^تنزيل الكل @(%S+)$') then
 local UserName = text:match('^تنزيل الكل @(%S+)$')
 if not msg.Addictive then
-return LuaTele.sendText(msg_chat_id,msg_id,'\n*⋄︙هاذا الامر يخص { '..Controller_Num(7)..' }* ',"md",true)  
+return LuaTele.sendText(msg_chat_id,msg_id,'\n*⋄︙هاذا الامر يخص { '..Controller_Num(1)..' }* ',"md",true)  
 end
 if ChannelJoin(msg) == false then
 local reply_markup = LuaTele.replyMarkup{type = 'inline',data = {{{text = 'اضغط للاشتراك', url = 't.me/'..Redis:get(TheSharrawy..'Sharrawy:Channel:Join')}, },}}
@@ -8361,7 +8313,7 @@ end
 
 if text == 'تعين الايدي' then
 if not msg.Addictive then
-return LuaTele.sendText(msg_chat_id,msg_id,'\n*⋄︙هاذا الامر يخص { '..Controller_Num(7)..' }* ',"md",true)  
+return LuaTele.sendText(msg_chat_id,msg_id,'\n*⋄︙هاذا الامر يخص { '..Controller_Num(1)..' }* ',"md",true)  
 end
 if ChannelJoin(msg) == false then
 local reply_markup = LuaTele.replyMarkup{type = 'inline',data = {{{text = 'اضغط للاشتراك', url = 't.me/'..Redis:get(TheSharrawy..'Sharrawy:Channel:Join')}, },}}
@@ -8385,7 +8337,7 @@ return LuaTele.sendText(msg_chat_id,msg_id,[[
 end 
 if text == 'حذف الايدي' or text == 'مسح الايدي' then
 if not msg.Addictive then
-return LuaTele.sendText(msg_chat_id,msg_id,'\n*⋄︙هاذا الامر يخص { '..Controller_Num(7)..' }* ',"md",true)  
+return LuaTele.sendText(msg_chat_id,msg_id,'\n*⋄︙هاذا الامر يخص { '..Controller_Num(1)..' }* ',"md",true)  
 end
 if ChannelJoin(msg) == false then
 local reply_markup = LuaTele.replyMarkup{type = 'inline',data = {{{text = 'اضغط للاشتراك', url = 't.me/'..Redis:get(TheSharrawy..'Sharrawy:Channel:Join')}, },}}
@@ -8663,14 +8615,8 @@ return LuaTele.sendText(msg.chat_id,msg.id,'*\n⋄︙عليك الاشتراك �
 end
 local list = Redis:smembers(TheSharrawy.."Sharrawy:List:Manager"..msg_chat_id.."")
 for k,v in pairs(list) do
-Redis:del(TheSharrawy.."Sharrawy:Add:Rd:Manager:Gif"..v..msg_chat_id)   
 Redis:del(TheSharrawy.."Sharrawy:Add:Rd:Manager:Vico"..v..msg_chat_id)   
-Redis:del(TheSharrawy.."Sharrawy:Add:Rd:Manager:Stekrs"..v..msg_chat_id)     
 Redis:del(TheSharrawy.."Sharrawy:Add:Rd:Manager:Text"..v..msg_chat_id)   
-Redis:del(TheSharrawy.."Sharrawy:Add:Rd:Manager:Photo"..v..msg_chat_id)
-Redis:del(TheSharrawy.."Sharrawy:Add:Rd:Manager:Video"..v..msg_chat_id)
-Redis:del(TheSharrawy.."Sharrawy:Add:Rd:Manager:File"..v..msg_chat_id)
-Redis:del(TheSharrawy.."Sharrawy:Add:Rd:Manager:video_note"..v..msg_chat_id)
 Redis:del(TheSharrawy.."Sharrawy:Add:Rd:Manager:Audio"..v..msg_chat_id)
 Redis:del(TheSharrawy.."Sharrawy:List:Manager"..msg_chat_id)
 end
@@ -8714,8 +8660,8 @@ end
 return LuaTele.sendText(msg_chat_id,msg_id,"["..text.."]","md",true)  
 end
 if text == "اضف رد" then
-if not msg.ControllerBot then 
-return LuaTele.sendText(msg_chat_id,msg_id,'\n*⋄︙هاذا الامر يخص { '..Controller_Num(1)..' }* ',"md",true)  
+if not msg.Managers then 
+return LuaTele.sendText(msg_chat_id,msg_id,'\n*⋄︙هاذا الامر يخص { '..Controller_Num(6)..' }* ',"md",true)  
 end
 if ChannelJoin(msg) == false then
 local reply_markup = LuaTele.replyMarkup{type = 'inline',data = {{{text = 'اضغط للاشتراك', url = 't.me/'..Redis:get(TheSharrawy..'Sharrawy:Channel:Join')}, },}}
@@ -8725,8 +8671,8 @@ Redis:set(TheSharrawy.."Sharrawy:Set:Manager:rd"..msg.sender.user_id..":"..msg_c
 return LuaTele.sendText(msg_chat_id,msg_id,"⋄︙ارسل الان الكلمه لاضافتها في ردود المدير ","md",true)  
 end
 if text == "حذف رد" then
-if not msg.ControllerBot then 
-return LuaTele.sendText(msg_chat_id,msg_id,'\n*⋄︙هاذا الامر يخص { '..Controller_Num(1)..' }* ',"md",true)  
+if not msg.Managers then 
+return LuaTele.sendText(msg_chat_id,msg_id,'\n*⋄︙هاذا الامر يخص { '..Controller_Num(6)..' }* ',"md",true)  
 end
 if ChannelJoin(msg) == false then
 local reply_markup = LuaTele.replyMarkup{type = 'inline',data = {{{text = 'اضغط للاشتراك', url = 't.me/'..Redis:get(TheSharrawy..'Sharrawy:Channel:Join')}, },}}
@@ -8745,16 +8691,9 @@ return LuaTele.sendText(msg.chat_id,msg.id,'*\n⋄︙عليك الاشتراك �
 end
 local list = Redis:smembers(TheSharrawy.."Sharrawy:List:Rd:Sudo")
 for k,v in pairs(list) do
-Redis:del(TheSharrawy.."Sharrawy:Add:Rd:Sudo:Gif"..v)   
-Redis:del(TheSharrawy.."Sharrawy:Add:Rd:Sudo:vico"..v)   
-Redis:del(TheSharrawy.."Sharrawy:Add:Rd:Sudo:stekr"..v)     
 Redis:del(TheSharrawy.."Sharrawy:Add:Rd:Sudo:Text"..v)   
-Redis:del(TheSharrawy.."Sharrawy:Add:Rd:Sudo:Photo"..v)
-Redis:del(TheSharrawy.."Sharrawy:Add:Rd:Sudo:Video"..v)
 Redis:del(TheSharrawy.."Sharrawy:Add:Rd:Sudo:File"..v)
 Redis:del(TheSharrawy.."Sharrawy:Add:Rd:Sudo:Audio"..v)
-Redis:del(TheSharrawy.."Sharrawy:Add:Rd:Sudo:video_note"..v)
-Redis:del(TheSharrawy.."Sharrawy:List:Rd:Sudo")
 end
 return LuaTele.sendText(msg_chat_id,msg_id,"⋄︙تم حذف ردود المطور","md",true)  
 end
@@ -9191,7 +9130,7 @@ data = {
 {text = 'اوامر المدراء', data = msg.sender.user_id..'/help3'}, {text = 'اوامر المنشئين', data = msg.sender.user_id..'/help4'}, 
 },
 {
-{text = 'اوامر مطورين', data = msg.sender.user_id..'/help5'}, {text = 'الالعاب', data = msg.sender.user_id..'/help6'}, 
+{text = 'اوامر مطورين', data = msg.sender.user_id..'/help5'}, 
 },
 {
 {text = 'اوامر القفل الفتح', data = msg.sender.user_id..'/NoNextSeting'}, {text = '  اوامر التعطيل التفعيل  ', data = msg.sender.user_id..'/listallAddorrem'}, 
@@ -9312,7 +9251,7 @@ data = {
 return LuaTele.sendText(msg_chat_id,msg_id,'⋄︙عليك استخدام اوامر التحكم بالقوائم',"md",false, false, false, false, reply_markup)
 elseif text == 'الالعاب' then
 if not msg.Addictive then
-return LuaTele.sendText(msg_chat_id,msg_id,'\n*⋄︙هاذا الامر يخص { '..Controller_Num(7)..' }* ',"md",true)  
+return LuaTele.sendText(msg_chat_id,msg_id,'\n*⋄︙العاب ماكو شعراوي ميقبل 🤫* ',"md",true)  
 end
 if ChannelJoin(msg) == false then
 local reply_markup = LuaTele.replyMarkup{type = 'inline',data = {{{text = 'اضغط للاشتراك', url = 't.me/'..Redis:get(TheSharrawy..'Sharrawy:Channel:Join')}, },}}
@@ -9370,20 +9309,13 @@ if text == (Redis:get(TheSharrawy.."Sharrawy:Name:Bot") or "شعراوي") then
 local NamesBot = (Redis:get(TheSharrawy.."Sharrawy:Name:Bot") or "شعراوي")
 local NameBots = {
 "عمر "..NamesBot.. " شتريد؟",
-"أჂ̤ أჂ̤ هياتني اني",
-"موجود بس لتصيح",
-"لتــلح دا احجي ويه بنات شعراوي بعدين اجاوبك",
-"راح نموت بكورونا ونته بعدك تصيح "..NamesBot,
-'يمعود والله نعسان'
 }
 return LuaTele.sendText(msg_chat_id,msg_id, NameBots[math.random(#NameBots)],"md",true)  
 end
 if text == "بوت" then
 local NamesBot = (Redis:get(TheSharrawy.."Sharrawy:Name:Bot") or "شعراوي")
 local BotName = {
-"باوع لك خليني احبك وصيحلي باسمي "..NamesBot,
-"لتخليني ارجع لحركاتي لقديمه وردا ترا اسمي "..NamesBot.. "",
-"راح نموت بكورونا ونته بعدك تصيح بوت"
+"عمر "..NamesBot.. " شتريد؟",
 }
 return LuaTele.sendText(msg_chat_id,msg_id,BotName[math.random(#BotName)],"md",true)   
 end
@@ -9451,14 +9383,6 @@ else
 return LuaTele.sendText(msg_chat_id,msg_id,'*⋄︙العدد الكلي { '..#list..' } للمجموعات \n⋄︙لا توجد مجموعات وهميه*',"md")
 end
 end
-if text == "سمايلات" or text == "سمايل" then
-if Redis:get(TheSharrawy.."Sharrawy:Status:Games"..msg.chat_id) then
-Random = {"🍏","🍎","🍐","🍊","🍋","🍉","🍇","🍓","🍈","🍒","🍑","🍍","🥥","🥝","🍅","🍆","🥑","🥦","🥒","🌶","🌽","🥕","🥔","🥖","🥐","🍞","🥨","🍟","🧀","🥚","🍳","🥓","🥩","🍗","🍖","🌭","🍔","🍠","🍕","🥪","🥙","☕️","🥤","🍶","🍺","🍻","🏀","⚽️","🏈","⚾️","🎾","🏐","🏉","🎱","🏓","🏸","🥅","🎰","🎮","🎳","🎯","🎲","🎻","🎸","🎺","🥁","🎹","🎼","🎧","🎤","🎬","🎨","🎭","🎪","🎟","🎫","🎗","🏵","🎖","🏆","🥌","🛷","🚗","🚌","🏎","🚓","🚑","🚚","🚛","🚜","⚔","🛡","🔮","🌡","💣","⋄","📍","📓","📗","📂","📅","📪","📫","⋄","📭","⏰","📺","🎚","☎️","📡"}
-SM = Random[math.random(#Random)]
-Redis:set(TheSharrawy.."Sharrawy:Game:Smile"..msg.chat_id,SM)
-return LuaTele.sendText(msg_chat_id,msg_id,"⋄︙اسرع واحد يدز هاذا السمايل ? ~ {`"..SM.."`}","md",true)  
-end
-end
 if text == "صورتي" then
 if Redis:get(TheSharrawy.."Sharrawy:Status:photo"..msg.chat_id) then
 local photo = LuaTele.getUserProfilePhotos(msg.sender.user_id)
@@ -9469,735 +9393,7 @@ return LuaTele.sendText(msg_chat_id,msg_id,'*● لا توجد صوره ف حس�
 end
 end
 end
-if text == "جمالي" or text == 'نسبه جمالي' then
-if Redis:get(TheSharrawy.."Sharrawy:Status:Games"..msg.chat_id) then
-local photo = LuaTele.getUserProfilePhotos(msg.sender.user_id)
-if msg.Developers then
-if photo.total_count > 0 then
-return LuaTele.sendPhoto(msg.chat_id, msg.id, photo.photos[1].sizes[#photo.photos[1].sizes].photo.remote.id,"*نسبه جمالك هي 900% عشان مطور ولازم اطبله😹♥*", "md")
-else
-return LuaTele.sendText(msg_chat_id,msg_id,'*● لا توجد صوره ف حسابك*',"md",true) 
-end
-else
-if photo.total_count > 0 then
-local nspp = {"10","20","30","35","75","34","66","82","23","19","55","80","63","32","27","89","99","98","79","100","8","3","6","0",}
-local rdbhoto = nspp[math.random(#nspp)]
-return LuaTele.sendPhoto(msg.chat_id, msg.id, photo.photos[1].sizes[#photo.photos[1].sizes].photo.remote.id,"*نسبه جمالك هي "..rdbhoto.."% 🙄♥*", "md")
-else
-return LuaTele.sendText(msg_chat_id,msg_id,'*● لا توجد صوره ف حسابك*',"md",true) 
-end
-end
-end
-end
-if text == "كت" or text == "كت تويت" then
-if Redis:get(TheSharrawy.."Sharrawy:Status:Games"..msg.chat_id) then
-local texting = {"اخر افلام شاهدتها", 
-"اخر افلام شاهدتها", 
-"ما هي وظفتك الحياه", 
-"اعز اصدقائك ?", 
-"اخر اغنية سمعتها ?", 
-"تكلم عن نفسك", 
-"ليه انت مش سالك", 
-"اخر كتاب قرآته", 
-"روايتك المفضله ?", 
-"اخر اكله اكلتها", 
-"اخر كتاب قرآته", 
-"ليش حسين ذكي؟ ", 
-"افضل يوم ف حياتك", 
-"ليه مضيفتش كل جهاتك", 
-"حكمتك ف الحياه", 
-"لون عيونك", 
-"كتابك المفضل", 
-"هوايتك المفضله", 
-"علاقتك مع اهلك", 
-" ما السيء في هذه الحياة ؟ ", 
-"أجمل شيء حصل معك خلال هذا الاسبوع ؟ ", 
-"سؤال ينرفزك ؟ ", 
-" اكثر ممثل تحبه ؟ ", 
-"قد تخيلت شي في بالك وصار ؟ ", 
-"شيء عندك اهم من الناس ؟ ", 
-"تفضّل النقاش الطويل او تحب الاختصار ؟ ", 
-"وش أخر شي ضيعته؟ ", 
-"كم مره حبيت؟ ", 
-" اكثر المتابعين عندك باي برنامج؟", 
-" آخر مره ضربت عشره كانت متى ؟", 
-" نسبه الندم عندك للي وثقت فيهم ؟", 
-"تحب ترتبط بكيرفي ولا فلات؟", 
-" جربت شعور احد يحبك بس انت مو قادر تحبه؟", 
-" تجامل الناس ولا اللي بقلبك على لسانك؟", 
-" عمرك ضحيت باشياء لاجل شخص م يسوى ؟", 
-"مغني تلاحظ أن صوته يعجب الجميع إلا أنت؟ ", 
-" آخر غلطات عمرك؟ ", 
-" مسلسل كرتوني له ذكريات جميلة عندك؟ ", 
-" ما أكثر تطبيق تقضي وقتك عليه؟ ", 
-" أول شيء يخطر في بالك إذا سمعت كلمة نجوم ؟ ", 
-" قدوتك من الأجيال السابقة؟ ", 
-" أكثر طبع تهتم بأن يتواجد في شريك/ة حياتك؟ ", 
-"أكثر حيوان تخاف منه؟ ", 
-" ما هي طريقتك في الحصول على الراحة النفسية؟ ", 
-" إيموجي يعبّر عن مزاجك الحالي؟ ", 
-" أكثر تغيير ترغب أن تغيّره في نفسك؟ ", 
-"أكثر شيء أسعدك اليوم؟ ", 
-"اي رايك في الدنيا دي ؟ ", 
-"ما هو أفضل حافز للشخص؟ ", 
-"ما الذي يشغل بالك في الفترة الحالية؟", 
-"آخر شيء ندمت عليه؟ ", 
-"شاركنا صورة احترافية من تصويرك؟ ", 
-"تتابع انمي؟ إذا نعم ما أفضل انمي شاهدته ", 
-"يرد عليك متأخر على رسالة مهمة وبكل برود، موقفك؟ ", 
-"نصيحه تبدا ب -لا- ؟ ", 
-"كتاب أو رواية تقرأها هذه الأيام؟ ", 
-"فيلم عالق في ذهنك لا تنساه مِن روعته؟ ", 
-"يوم لا يمكنك نسيانه؟ ", 
-"شعورك الحالي في جملة؟ ", 
-"كلمة لشخص بعيد؟ ", 
-"صفة يطلقها عليك الشخص المفضّل؟ ", 
-"أغنية عالقة في ذهنك هاليومين؟ ", 
-"أكلة مستحيل أن تأكلها؟ ", 
-"كيف قضيت نهارك؟ ", 
-"تصرُّف ماتتحمله؟ ", 
-"موقف غير حياتك؟ ", 
-"اكثر مشروب تحبه؟ ", 
-"القصيدة اللي تأثر فيك؟ ", 
-"متى يصبح الصديق غريب ", 
-"وين نلقى السعاده برايك؟ ", 
-"تاريخ ميلادك؟ ", 
-"قهوه و لا شاي؟ ", 
-"من محبّين الليل أو الصبح؟ ", 
-"حيوانك المفضل؟ ", 
-"كلمة غريبة ومعناها؟ ", 
-"كم تحتاج من وقت لتثق بشخص؟ ", 
-"اشياء نفسك تجربها؟ ", 
-"يومك ضاع على؟ ", 
-"كل شيء يهون الا ؟ ", 
-"اسم ماتحبه ؟ ", 
-"وقفة إحترام للي إخترع ؟ ", 
-"أقدم شيء محتفظ فيه من صغرك؟ ", 
-"كلمات ماتستغني عنها بسوالفك؟ ", 
-"وش الحب بنظرك؟ ", 
-"حب التملك في شخصِيـتك ولا ؟ ", 
-"تخطط للمستقبل ولا ؟ ", 
-"موقف محرج ماتنساه ؟ ", 
-"من طلاسم لهجتكم ؟ ", 
-"اعترف باي حاجه ؟ ", 
-"عبّر عن مودك بصوره ؟ ",
-"آخر مره ضربت عشره كانت متى ؟", 
-"اسم دايم ع بالك ؟ ", 
-"اشياء تفتخر انك م سويتها ؟ ", 
-" لو بكيفي كان ؟ ", 
-  "أكثر جملة أثرت بك في حياتك؟ ",
-  "إيموجي يوصف مزاجك حاليًا؟ ",
-  "أجمل اسم بنت بحرف الباء؟ ",
-  "كيف هي أحوال قلبك؟ ",
-  "أجمل مدينة؟ ",
-  "كيف كان أسبوعك؟ ",
-  "شيء تشوفه اكثر من اهلك ؟ ",
-  "اخر مره فضفضت؟ ",
-  "قد كرهت احد بسبب اسلوبه؟ ",
-  "قد حبيت شخص وخذلك؟ ",
-  "كم مره حبيت؟ ",
-  "اكبر غلطة بعمرك؟ ",
-  "نسبة النعاس عندك حاليًا؟ ",
-  "شرايكم بمشاهير التيك توك؟ ",
-  "ما الحاسة التي تريد إضافتها للحواس الخمسة؟ ",
-  "اسم قريب لقلبك؟ ",
-  "مشتاق لمطعم كنت تزوره قبل الحظر؟ ",
-  "أول شيء يخطر في بالك إذا سمعت كلمة (ابوي يبيك)؟ ",
-  "ما أول مشروع تتوقع أن تقوم بإنشائه إذا أصبحت مليونير؟ ",
-  "أغنية عالقة في ذهنك هاليومين؟ ",
-  "متى اخر مره قريت قرآن؟ ",
-  "كم صلاة فاتتك اليوم؟ ",
-  "تفضل التيكن او السنقل؟ ",
-  "وش أفضل بوت برأيك؟ ",
-"كم لك بالتلي؟ ",
-"وش الي تفكر فيه الحين؟ ",
-"كيف تشوف الجيل ذا؟ ",
-"منشن شخص وقوله، تحبني؟ ",
-"لو جاء شخص وعترف لك كيف ترده؟ ",
-"مر عليك موقف محرج؟ ",
-"وين تشوف نفسك بعد سنتين؟ ",
-"لو فزعت/ي لصديق/ه وقالك مالك دخل وش بتسوي/ين؟ ",
-"وش اجمل لهجة تشوفها؟ ",
-"قد سافرت؟ ",
-"افضل مسلسل عندك؟ ",
-"افضل فلم عندك؟ ",
-"مين اكثر يخون البنات/العيال؟ ",
-"متى حبيت؟ ",
-  "بالعادة متى تنام؟ ",
-  "شيء من صغرك ماتغير فيك؟ ",
-  "شيء بسيط قادر يعدل مزاجك بشكل سريع؟ ",
-  "تشوف الغيره انانيه او حب؟ ",
-"حاجة تشوف نفسك مبدع فيها؟ ",
-  "مع او ضد : يسقط جمال المراة بسبب قبح لسانها؟ ",
-  "عمرك بكيت على شخص مات في مسلسل ؟ ",
-  "‏- هل تعتقد أن هنالك من يراقبك بشغف؟ ",
-  "تدوس على قلبك او كرامتك؟ ",
-  "اكثر لونين تحبهم مع بعض؟ ",
-  "مع او ضد : النوم افضل حل لـ مشاكل الحياة؟ ",
-  "سؤال دايم تتهرب من الاجابة عليه؟ ",
-  "تحبني ولاتحب الفلوس؟ ",
-  "العلاقه السريه دايماً تكون حلوه؟ ",
-  "لو أغمضت عينيك الآن فما هو أول شيء ستفكر به؟ ",
-"كيف ينطق الطفل اسمك؟ ",
-  "ما هي نقاط الضعف في شخصيتك؟ ",
-  "اكثر كذبة تقولها؟ ",
-  "تيكن ولا اضبطك؟ ",
-  "اطول علاقة كنت فيها مع شخص؟ ",
-  "قد ندمت على شخص؟ ",
-  "وقت فراغك وش تسوي؟ ",
-  "عندك أصحاب كثير؟ ولا ينعد بالأصابع؟ ",
-  "حاط نغمة خاصة لأي شخص؟ ",
-  "وش اسم شهرتك؟ ",
-  "أفضل أكلة تحبه لك؟ ",
-"عندك شخص تسميه ثالث والدينك؟ ",
-  "عندك شخص تسميه ثالث والدينك؟ ",
-  "اذا قالو لك تسافر أي مكان تبيه وتاخذ معك شخص واحد وين بتروح ومين تختار؟ ",
-  "أطول مكالمة كم ساعة؟ ",
-  "تحب الحياة الإلكترونية ولا الواقعية؟ ",
-  "كيف حال قلبك ؟ بخير ولا مكسور؟ ",
-  "أطول مدة نمت فيها كم ساعة؟ ",
-  "تقدر تسيطر على ضحكتك؟ ",
-  "أول حرف من اسم الحب؟ ",
-  "تحب تحافظ على الذكريات ولا تمسحه؟ ",
-  "اسم اخر شخص زعلك؟ ",
-"وش نوع الأفلام اللي تحب تتابعه؟ ",
-  "أنت انسان غامض ولا الكل يعرف عنك؟ ",
-  "لو الجنسية حسب ملامحك وش بتكون جنسيتك؟ ",
-  "عندك أخوان او خوات من الرضاعة؟ ",
-  "إختصار تحبه؟ ",
-  "إسم شخص وتحس أنه كيف؟ ",
-  "وش الإسم اللي دايم تحطه بالبرامج؟ ",
-  "وش برجك؟ ",
-  "لو يجي عيد ميلادك تتوقع يجيك هدية؟ ",
-  "اجمل هدية جاتك وش هو؟ ",
-  "الصداقة ولا الحب؟ ",
-"الصداقة ولا الحب؟ ",
-  "الغيرة الزائدة شك؟ ولا فرط الحب؟ ",
-    "هل انت دي تويت باعت باندا؟ ",
-  "قد حبيت شخصين مع بعض؟ وانقفطت؟ ",
-  "وش أخر شي ضيعته؟ ",
-  "قد ضيعت شي ودورته ولقيته بيدك؟ ",
-  "تؤمن بمقولة اللي يبيك مايحتار فيك؟ ",
-  "سبب وجوك بالتليجرام؟ ",
-  "تراقب شخص حاليا؟ ",
-  "عندك معجبين ولا محد درا عنك؟ ",
-  "لو نسبة جمالك بتكون بعدد شحن جوالك كم بتكون؟ ",
-  "أنت محبوب بين الناس؟ ولاكريه؟ ",
-"كم عمرك؟ ",
-  "لو يسألونك وش اسم امك تجاوبهم ولا تسفل فيهم؟ ",
-  "تؤمن بمقولة الصحبة تغنيك الحب؟ ",
-  "وش مشروبك المفضل؟ ",
-  "قد جربت الدخان بحياتك؟ وانقفطت ولا؟ ",
-  "أفضل وقت للسفر؟ الليل ولا النهار؟ ",
-  "انت من النوع اللي تنام بخط السفر؟ ",
-  "عندك حس فكاهي ولا نفسية؟ ",
-  "تبادل الكراهية بالكراهية؟ ولا تحرجه بالطيب؟ ",
-  "أفضل ممارسة بالنسبة لك؟ ",
-  "لو قالو لك تتخلى عن شي واحد تحبه بحياتك وش يكون؟ ",
-"لو احد تركك وبعد فتره يحاول يرجعك بترجع له ولا خلاص؟ ",
-  "برأيك كم العمر المناسب للزواج؟ ",
-  "اذا تزوجت بعد كم بتخلف عيال؟ ",
-  "فكرت وش تسمي أول اطفالك؟ ",
-  "من الناس اللي تحب الهدوء ولا الإزعاج؟ ",
-  "الشيلات ولا الأغاني؟ ",
-  "عندكم شخص مطوع بالعايلة؟ ",
-  "تتقبل النصيحة من اي شخص؟ ",
-  "اذا غلطت وعرفت انك غلطان تحب تعترف ولا تجحد؟ ",
-  "جربت شعور احد يحبك بس انت مو قادر تحبه؟ ",
-  "دايم قوة الصداقة تكون بإيش؟ ",
-"أفضل البدايات بالعلاقة بـ وش؟ ",
-  "وش مشروبك المفضل؟ او قهوتك المفضلة؟ ",
-  "تحب تتسوق عبر الانترنت ولا الواقع؟ ",
-  "انت من الناس اللي بعد ماتشتري شي وتروح ترجعه؟ ",
-  "أخر مرة بكيت متى؟ وليش؟ ",
-  "عندك الشخص اللي يقلب الدنيا عشان زعلك؟ ",
-  "أفضل صفة تحبه بنفسك؟ ",
-  "كلمة تقولها للوالدين؟ ",
-  "أنت من الناس اللي تنتقم وترد الاذى ولا تحتسب الأجر وتسامح؟ ",
-  "كم عدد سنينك بالتليجرام؟ ",
-  "تحب تعترف ولا تخبي؟ ",
-"انت من الناس الكتومة ولا تفضفض؟ ",
-  "أنت بعلاقة حب الحين؟ ",
-  "عندك اصدقاء غير جنسك؟ ",
-  "أغلب وقتك تكون وين؟ ",
-  "لو المقصود يقرأ وش بتكتب له؟ ",
-  "تحب تعبر بالكتابة ولا بالصوت؟ ",
-  "عمرك كلمت فويس احد غير جنسك؟ ",
-  "لو خيروك تصير مليونير ولا تتزوج الشخص اللي تحبه؟ ",
-  "لو عندك فلوس وش السيارة اللي بتشتريها؟ ",
-  "كم أعلى مبلغ جمعته؟ ",
-  "اذا شفت احد على غلط تعلمه الصح ولا تخليه بكيفه؟ ",
-"قد جربت تبكي فرح؟ وليش؟ ",
-"تتوقع إنك بتتزوج اللي تحبه؟ ",
-  "ما هو أمنيتك؟ ",
-  "وين تشوف نفسك بعد خمس سنوات؟ ",
-  "هل انت حرامي تويت بتعت باندا؟ ",
-  "لو خيروك تقدم الزمن ولا ترجعه ورا؟ ",
-  "لعبة قضيت وقتك فيه بالحجر المنزلي؟ ",
-  "تحب تطق الميانة ولا ثقيل؟ ",
-  "باقي معاك للي وعدك ما بيتركك؟ ",
-  "اول ماتصحى من النوم مين تكلمه؟ ",
-  "عندك الشخص اللي يكتب لك كلام كثير وانت نايم؟ ",
-  "قد قابلت شخص تحبه؟ وولد ولا بنت؟ ",
-   "هل انت تحب باندا؟ ",
-"اذا قفطت احد تحب تفضحه ولا تستره؟ ",
-  "كلمة للشخص اللي يسب ويسطر؟ ",
-  "آية من القران تؤمن فيه؟ ",
-  "تحب تعامل الناس بنفس المعاملة؟ ولا تكون أطيب منهم؟ ",
-"حاجة ودك تغيرها هالفترة؟ ",
-  "كم فلوسك حاليا وهل يكفيك ام لا؟ ",
-  "وش لون عيونك الجميلة؟ ",
-  "من الناس اللي تتغزل بالكل ولا بالشخص اللي تحبه بس؟ ",
-  "اذكر موقف ماتنساه بعمرك؟ ",
-  "وش حاب تقول للاشخاص اللي بيدخل حياتك؟ ",
-  "ألطف شخص مر عليك بحياتك؟ ",
-   "هل باندا لطيف؟ ",
-"انت من الناس المؤدبة ولا نص نص؟ ",
-  "كيف الصيد معاك هالأيام ؟ وسنارة ولاشبك؟ ",
-  "لو الشخص اللي تحبه قال بدخل حساباتك بتعطيه ولا تكرشه؟ ",
-  "أكثر شي تخاف منه بالحياه وش؟ ",
-  "اكثر المتابعين عندك باي برنامج؟ ",
-  "متى يوم ميلادك؟ ووش الهدية اللي نفسك فيه؟ ",
-  "قد تمنيت شي وتحقق؟ ",
-  "قلبي على قلبك مهما صار لمين تقولها؟ ",
-  "وش نوع جوالك؟ واذا بتغيره وش بتأخذ؟ ",
-  "كم حساب عندك بالتليجرام؟ ",
-  "متى اخر مرة كذبت؟ ",
-"كذبت في الاسئلة اللي مرت عليك قبل شوي؟ ",
-  "تجامل الناس ولا اللي بقلبك على لسانك؟ ",
-  "قد تمصلحت مع أحد وليش؟ ",
-  "وين تعرفت على الشخص اللي حبيته؟ ",
-  "قد رقمت او احد رقمك؟ ",
-  "وش أفضل لعبته بحياتك؟ ",
-  "أخر شي اكلته وش هو؟ ",
-  "حزنك يبان بملامحك ولا صوتك؟ ",
-  "لقيت الشخص اللي يفهمك واللي يقرا افكارك؟ ",
-  "فيه شيء م تقدر تسيطر عليه ؟ ",
-  "منشن شخص متحلطم م يعجبه شيء؟ ",
-"اكتب تاريخ مستحيل تنساه ",
-  "شيء مستحيل انك تاكله ؟ ",
-  "تحب تتعرف على ناس جدد ولا مكتفي باللي عندك ؟ ",
-  "انسان م تحب تتعامل معاه ابداً ؟ ",
-  "شيء بسيط تحتفظ فيه؟ ",
-  "فُرصه تتمنى لو أُتيحت لك ؟ ",
-   "لي باندا ناك اليكس؟ ",
-  "شيء مستحيل ترفضه ؟. ",
-  "لو زعلت بقوة وش بيرضيك ؟ ",
-  "تنام بـ اي مكان ، ولا بس غرفتك ؟ ",
-  "ردك المعتاد اذا أحد ناداك ؟ ",
-  "مين الي تحب يكون مبتسم دائما ؟ ",
-" إحساسك في هاللحظة؟ ",
-  "وش اسم اول شخص تعرفت عليه فالتلقرام ؟ ",
-  "اشياء صعب تتقبلها بسرعه ؟ ",
-  "شيء جميل صار لك اليوم ؟ ",
-  "اذا شفت شخص يتنمر على شخص قدامك شتسوي؟ ",
-  "يهمك ملابسك تكون ماركة ؟ ",
-  "ردّك على شخص قال (أنا بطلع من حياتك)؟. ",
-  "مين اول شخص تكلمه اذا طحت بـ مصيبة ؟ ",
-  "تشارك كل شي لاهلك ولا فيه أشياء ما تتشارك؟ ",
-  "كيف علاقتك مع اهلك؟ رسميات ولا ميانة؟ ",
-  "عمرك ضحيت باشياء لاجل شخص م يسوى ؟ ",
-"اكتب سطر من اغنية او قصيدة جا فـ بالك ؟ ",
-  "شيء مهما حطيت فيه فلوس بتكون مبسوط ؟ ",
-  "مشاكلك بسبب ؟ ",
-  "نسبه الندم عندك للي وثقت فيهم ؟ ",
-  "اول حرف من اسم شخص تقوله? بطل تفكر فيني ابي انام؟ ",
-  "اكثر شيء تحس انه مات ف مجتمعنا؟ ",
-  "لو صار سوء فهم بينك وبين شخص هل تحب توضحه ولا تخليه كذا  لان مالك خلق توضح ؟ ",
-  "كم عددكم بالبيت؟ ",
-  "عادي تتزوج من برا القبيلة؟ ",
-  "أجمل شي بحياتك وش هو؟ ",
-} 
-return LuaTele.sendText(msg_chat_id,msg_id,texting[math.random(#texting)],'md')
-end
-end
-if text == "الاسرع" or tect == "ترتيب" then
-if Redis:get(TheSharrawy.."Sharrawy:Status:Games"..msg.chat_id) then
-KlamSpeed = {"سحور","سياره","استقبال","قنفه","ايفون","بزونه","مطبخ","كرستيانو","دجاجه","مدرسه","الوان","غرفه","ثلاجه","كهوه","سفينه","العراق","محطه","طياره","رادار","منزل","مستشفى","كهرباء","تفاحه","اخطبوط","سلمون","فرنسا","برتقاله","تفاح","مطرقه","بتيته","لهانه","شباك","باص","سمكه","ذباب","تلفاز","حاسوب","انترنيت","ساحه","جسر"};
-name = KlamSpeed[math.random(#KlamSpeed)]
-Redis:set(TheSharrawy.."Sharrawy:Game:Monotonous"..msg.chat_id,name)
-name = string.gsub(name,"سحور","س ر و ح")
-name = string.gsub(name,"سياره","ه ر س ي ا")
-name = string.gsub(name,"استقبال","ل ب ا ت ق س ا")
-name = string.gsub(name,"قنفه","ه ق ن ف")
-name = string.gsub(name,"ايفون","و ن ف ا")
-name = string.gsub(name,"بزونه","ز و ه ن")
-name = string.gsub(name,"مطبخ","خ ب ط م")
-name = string.gsub(name,"كرستيانو","س ت ا ن و ك ر ي")
-name = string.gsub(name,"دجاجه","ج ج ا د ه")
-name = string.gsub(name,"مدرسه","ه م د ر س")
-name = string.gsub(name,"الوان","ن ا و ا ل")
-name = string.gsub(name,"غرفه","غ ه ر ف")
-name = string.gsub(name,"ثلاجه","ج ه ت ل ا")
-name = string.gsub(name,"كهوه","ه ك ه و")
-name = string.gsub(name,"سفينه","ه ن ف ي س")
-name = string.gsub(name,"العراق","ق ع ا ل ر ا")
-name = string.gsub(name,"محطه","ه ط م ح")
-name = string.gsub(name,"طياره","ر ا ط ي ه")
-name = string.gsub(name,"رادار","ر ا ر ا د")
-name = string.gsub(name,"منزل","ن ز م ل")
-name = string.gsub(name,"مستشفى","ى ش س ف ت م")
-name = string.gsub(name,"كهرباء","ر ب ك ه ا ء")
-name = string.gsub(name,"تفاحه","ح ه ا ت ف")
-name = string.gsub(name,"اخطبوط","ط ب و ا خ ط")
-name = string.gsub(name,"سلمون","ن م و ل س")
-name = string.gsub(name,"فرنسا","ن ف ر س ا")
-name = string.gsub(name,"برتقاله","ر ت ق ب ا ه ل")
-name = string.gsub(name,"تفاح","ح ف ا ت")
-name = string.gsub(name,"مطرقه","ه ط م ر ق")
-name = string.gsub(name,"بتيته","ب ت ت ي ه")
-name = string.gsub(name,"لهانه","ه ن ل ه ل")
-name = string.gsub(name,"شباك","ب ش ا ك")
-name = string.gsub(name,"باص","ص ا ب")
-name = string.gsub(name,"سمكه","ك س م ه")
-name = string.gsub(name,"ذباب","ب ا ب ذ")
-name = string.gsub(name,"تلفاز","ت ف ل ز ا")
-name = string.gsub(name,"حاسوب","س ا ح و ب")
-name = string.gsub(name,"انترنيت","ا ت ن ر ن ي ت")
-name = string.gsub(name,"ساحه","ح ا ه س")
-name = string.gsub(name,"جسر","ر ج س")
-return LuaTele.sendText(msg_chat_id,msg_id,"⋄︙اسرع واحد يرتبها ~ {"..name.."}","md",true)  
-end
-end
-if text == "حزوره" then
-if Redis:get(TheSharrawy.."Sharrawy:Status:Games"..msg.chat_id) then
-Hzora = {"الجرس","عقرب الساعه","السمك","المطر","5","الكتاب","البسمار","7","الكعبه","بيت الشعر","لهانه","انا","امي","الابره","الساعه","22","غلط","كم الساعه","البيتنجان","البيض","المرايه","الضوء","الهواء","الضل","العمر","القلم","المشط","الحفره","البحر","الثلج","الاسفنج","الصوت","بلم"};
-name = Hzora[math.random(#Hzora)]
-Redis:set(TheSharrawy.."Sharrawy:Game:Riddles"..msg.chat_id,name)
-name = string.gsub(name,"الجرس","شيئ اذا لمسته صرخ ما هوه ؟")
-name = string.gsub(name,"عقرب الساعه","اخوان لا يستطيعان تمضيه اكثر من دقيقه معا فما هما ؟")
-name = string.gsub(name,"السمك","ما هو الحيوان الذي لم يصعد الى سفينة نوح عليه السلام ؟")
-name = string.gsub(name,"المطر","شيئ يسقط على رأسك من الاعلى ولا يجرحك فما هو ؟")
-name = string.gsub(name,"5","ما العدد الذي اذا ضربته بنفسه واضفت عليه 5 يصبح ثلاثين ")
-name = string.gsub(name,"الكتاب","ما الشيئ الذي له اوراق وليس له جذور ؟")
-name = string.gsub(name,"البسمار","ما هو الشيئ الذي لا يمشي الا بالضرب ؟")
-name = string.gsub(name,"7","عائله مؤلفه من 6 بنات واخ لكل منهن .فكم عدد افراد العائله ")
-name = string.gsub(name,"الكعبه","ما هو الشيئ الموجود وسط مكة ؟")
-name = string.gsub(name,"بيت الشعر","ما هو البيت الذي ليس فيه ابواب ولا نوافذ ؟ ")
-name = string.gsub(name,"لهانه","وحده حلوه ومغروره تلبس مية تنوره .من هيه ؟ ")
-name = string.gsub(name,"انا","ابن امك وابن ابيك وليس باختك ولا باخيك فمن يكون ؟")
-name = string.gsub(name,"امي","اخت خالك وليست خالتك من تكون ؟ ")
-name = string.gsub(name,"الابره","ما هو الشيئ الذي كلما خطا خطوه فقد شيئا من ذيله ؟ ")
-name = string.gsub(name,"الساعه","ما هو الشيئ الذي يقول الصدق ولكنه اذا جاع كذب ؟")
-name = string.gsub(name,"22","كم مره ينطبق عقربا الساعه على بعضهما في اليوم الواحد ")
-name = string.gsub(name,"غلط","ما هي الكلمه الوحيده التي تلفض غلط دائما ؟ ")
-name = string.gsub(name,"كم الساعه","ما هو السؤال الذي تختلف اجابته دائما ؟")
-name = string.gsub(name,"البيتنجان","جسم اسود وقلب ابيض وراس اخظر فما هو ؟")
-name = string.gsub(name,"البيض","ماهو الشيئ الذي اسمه على لونه ؟")
-name = string.gsub(name,"المرايه","ارى كل شيئ من دون عيون من اكون ؟ ")
-name = string.gsub(name,"الضوء","ما هو الشيئ الذي يخترق الزجاج ولا يكسره ؟")
-name = string.gsub(name,"الهواء","ما هو الشيئ الذي يسير امامك ولا تراه ؟")
-name = string.gsub(name,"الضل","ما هو الشيئ الذي يلاحقك اينما تذهب ؟ ")
-name = string.gsub(name,"العمر","ما هو الشيء الذي كلما طال قصر ؟ ")
-name = string.gsub(name,"القلم","ما هو الشيئ الذي يكتب ولا يقرأ ؟")
-name = string.gsub(name,"المشط","له أسنان ولا يعض ما هو ؟ ")
-name = string.gsub(name,"الحفره","ما هو الشيئ اذا أخذنا منه ازداد وكبر ؟")
-name = string.gsub(name,"البحر","ما هو الشيئ الذي يرفع اثقال ولا يقدر يرفع مسمار ؟")
-name = string.gsub(name,"الثلج","انا ابن الماء فان تركوني في الماء مت فمن انا ؟")
-name = string.gsub(name,"الاسفنج","كلي ثقوب ومع ذالك احفض الماء فمن اكون ؟")
-name = string.gsub(name,"الصوت","اسير بلا رجلين ولا ادخل الا بالاذنين فمن انا ؟")
-name = string.gsub(name,"بلم","حامل ومحمول نصف ناشف ونصف مبلول فمن اكون ؟ ")
-return LuaTele.sendText(msg_chat_id,msg_id,"⋄︙اسرع واحد يحل الحزوره ↓\n {"..name.."}","md",true)  
-end
-end
-if text == "معاني" then
-if Redis:get(TheSharrawy.."Sharrawy:Status:Games"..msg.chat_id) then
-Redis:del(TheSharrawy.."Sharrawy:Set:Maany"..msg.chat_id)
-Maany_Rand = {"قرد","دجاجه","بطريق","ضفدع","بومه","نحله","ديك","جمل","بقره","دولفين","تمساح","قرش","نمر","اخطبوط","سمكه","خفاش","اسد","فأر","ذئب","فراشه","عقرب","زرافه","قنفذ","تفاحه","باذنجان"}
-name = Maany_Rand[math.random(#Maany_Rand)]
-Redis:set(TheSharrawy.."Sharrawy:Game:Meaningof"..msg.chat_id,name)
-name = string.gsub(name,"قرد","🐒")
-name = string.gsub(name,"دجاجه","🐔")
-name = string.gsub(name,"بطريق","🐧")
-name = string.gsub(name,"ضفدع","🐸")
-name = string.gsub(name,"بومه","🦉")
-name = string.gsub(name,"نحله","🐝")
-name = string.gsub(name,"ديك","🐓")
-name = string.gsub(name,"جمل","🐫")
-name = string.gsub(name,"بقره","🐄")
-name = string.gsub(name,"دولفين","🐬")
-name = string.gsub(name,"تمساح","🐊")
-name = string.gsub(name,"قرش","🦈")
-name = string.gsub(name,"نمر","🐅")
-name = string.gsub(name,"اخطبوط","🐙")
-name = string.gsub(name,"سمكه","🐟")
-name = string.gsub(name,"خفاش","🦇")
-name = string.gsub(name,"اسد","🦁")
-name = string.gsub(name,"فأر","🐭")
-name = string.gsub(name,"ذئب","🐺")
-name = string.gsub(name,"فراشه","🦋")
-name = string.gsub(name,"عقرب","🦂")
-name = string.gsub(name,"زرافه","🦒")
-name = string.gsub(name,"قنفذ","🦔")
-name = string.gsub(name,"تفاحه","🍎")
-name = string.gsub(name,"باذنجان","🍆")
-return LuaTele.sendText(msg_chat_id,msg_id,"⋄︙اسرع واحد يدز معنى السمايل ~ {"..name.."}","md",true)  
-end
-end
-if text == "خيرني" or text == "لو خيروك" or text == "خيروك" then 
-if Redis:get(TheSharrawy.."Sharrawy:Status:Games"..msg.chat_id) then
-local texting = {"لو خيروك |  بين الإبحار لمدة أسبوع كامل أو السفر على متن طائرة لـ 3 أيام متواصلة؟ ",
-"لو خيروك |  بين شراء منزل صغير أو استئجار فيلا كبيرة بمبلغ معقول؟ ",
-"لو خيروك |  أن تعيش قصة فيلم هل تختار الأكشن أو الكوميديا؟ ",
-"لو خيروك |  بين تناول البيتزا وبين الايس كريم وذلك بشكل دائم؟ ",
-"لو خيروك |  بين إمكانية تواجدك في الفضاء وبين إمكانية تواجدك في البحر؟ ",
-"لو خيروك |  بين تغيير وظيفتك كل سنة أو البقاء بوظيفة واحدة طوال حياتك؟ ",
-"لو خيروك |  أسئلة محرجة أسئلة صراحة ماذا ستختار؟ ",
-"لو خيروك |  بين الذهاب إلى الماضي والعيش مع جدك أو بين الذهاب إلى المستقبل والعيش مع أحفادك؟ ",
-"لو كنت شخص اخر هل تفضل البقاء معك أم أنك ستبتعد عن نفسك؟ ",
-"لو خيروك |  بين الحصول على الأموال في عيد ميلادك أو على الهدايا؟ ",
-"لو خيروك |  بين القفز بمظلة من طائرة أو الغوص في أعماق البحر؟ ",
-"لو خيروك |  بين الاستماع إلى الأخبار الجيدة أولًا أو الاستماع إلى الأخبار السيئة أولًا؟ ",
-"لو خيروك |  بين أن تكون رئيس لشركة فاشلة أو أن تكون موظف في شركة ناجحة؟ ",
-"لو خيروك |  بين أن يكون لديك جيران صاخبون أو أن يكون لديك جيران فضوليون؟ ",
-"لو خيروك |  بين أن تكون شخص مشغول دائمًا أو أن تكون شخص يشعر بالملل دائمًا؟ ",
-"لو خيروك |  بين قضاء يوم كامل مع الرياضي الذي تشجعه أو نجم السينما الذي تحبه؟ ",
-"لو خيروك |  بين استمرار فصل الشتاء دائمًا أو بقاء فصل الصيف؟ ",
-"لو خيروك |  بين العيش في القارة القطبية أو العيش في الصحراء؟ ",
-"لو خيروك |  بين أن تكون لديك القدرة على حفظ كل ما تسمع أو تقوله وبين القدرة على حفظ كل ما تراه أمامك؟ ",
-"لو خيروك |  بين أن يكون طولك 150 سنتي متر أو أن يكون 190 سنتي متر؟ ",
-"لو خيروك |  بين إلغاء رحلتك تمامًا أو بقائها ولكن فقدان الأمتعة والأشياء الخاص بك خلالها؟ ",
-"لو خيروك |  بين أن تكون اللاعب الأفضل في فريق كرة فاشل أو أن تكون لاعب عادي في فريق كرة ناجح؟ ",
-"لو خيروك |  بين ارتداء ملابس البيت لمدة أسبوع كامل أو ارتداء البدلة الرسمية لنفس المدة؟ ",
-"لو خيروك |  بين امتلاك أفضل وأجمل منزل ولكن في حي سيء أو امتلاك أسوأ منزل ولكن في حي جيد وجميل؟ ",
-"لو خيروك |  بين أن تكون غني وتعيش قبل 500 سنة، أو أن تكون فقير وتعيش في عصرنا الحالي؟ ",
-"لو خيروك |  بين ارتداء ملابس الغوص ليوم كامل والذهاب إلى العمل أو ارتداء ملابس جدك/جدتك؟ ",
-"لو خيروك |  بين قص شعرك بشكل قصير جدًا أو صبغه باللون الوردي؟ ",
-"لو خيروك |  بين أن تضع الكثير من الملح على كل الطعام بدون علم أحد، أو أن تقوم بتناول شطيرة معجون أسنان؟ ",
-"لو خيروك |  بين قول الحقيقة والصراحة الكاملة مدة 24 ساعة أو الكذب بشكل كامل مدة 3 أيام؟ ",
-"لو خيروك |  بين تناول الشوكولا التي تفضلها لكن مع إضافة رشة من الملح والقليل من عصير الليمون إليها أو تناول ليمونة كاملة كبيرة الحجم؟ ",
-"لو خيروك |  بين وضع أحمر الشفاه على وجهك ما عدا شفتين أو وضع ماسكارا على شفتين فقط؟ ",
-"لو خيروك |  بين الرقص على سطح منزلك أو الغناء على نافذتك؟ ",
-"لو خيروك |  بين تلوين شعرك كل خصلة بلون وبين ارتداء ملابس غير متناسقة لمدة أسبوع؟ ",
-"لو خيروك |  بين تناول مياه غازية مجمدة وبين تناولها ساخنة؟ ",
-"لو خيروك |  بين تنظيف شعرك بسائل غسيل الأطباق وبين استخدام كريم الأساس لغسيل الأطباق؟ ",
-"لو خيروك |  بين تزيين طبق السلطة بالبرتقال وبين إضافة البطاطا لطبق الفاكهة؟ ",
-"لو خيروك |  بين اللعب مع الأطفال لمدة 7 ساعات أو الجلوس دون فعل أي شيء لمدة 24 ساعة؟ ",
-"لو خيروك |  بين شرب كوب من الحليب أو شرب كوب من شراب عرق السوس؟ ",
-"لو خيروك |  بين الشخص الذي تحبه وصديق الطفولة؟ ",
-"لو خيروك |  بين أمك وأبيك؟ ",
-"لو خيروك |  بين أختك وأخيك؟ ",
-"لو خيروك |  بين نفسك وأمك؟ ",
-"لو خيروك |  بين صديق قام بغدرك وعدوك؟ ",
-"لو خيروك |  بين خسارة حبيبك/حبيبتك أو خسارة أخيك/أختك؟ ",
-"لو خيروك |  بإنقاذ شخص واحد مع نفسك بين أمك أو ابنك؟ ",
-"لو خيروك |  بين ابنك وابنتك؟ ",
-"لو خيروك |  بين زوجتك وابنك/ابنتك؟ ",
-"لو خيروك |  بين جدك أو جدتك؟ ",
-"لو خيروك |  بين زميل ناجح وحده أو زميل يعمل كفريق؟ ",
-"لو خيروك |  بين لاعب كرة قدم مشهور أو موسيقي مفضل بالنسبة لك؟ ",
-"لو خيروك |  بين مصور فوتوغرافي جيد وبين مصور سيء ولكنه عبقري فوتوشوب؟ ",
-"لو خيروك |  بين سائق سيارة يقودها ببطء وبين سائق يقودها بسرعة كبيرة؟ ",
-"لو خيروك |  بين أستاذ اللغة العربية أو أستاذ الرياضيات؟ ",
-"لو خيروك |  بين أخيك البعيد أو جارك القريب؟ ",
-"لو خيروك |  يبن صديقك البعيد وبين زميلك القريب؟ ",
-"لو خيروك |  بين رجل أعمال أو أمير؟ ",
-"لو خيروك |  بين نجار أو حداد؟ ",
-"لو خيروك |  بين طباخ أو خياط؟ ",
-"لو خيروك |  بين أن تكون كل ملابس بمقاس واحد كبير الحجم أو أن تكون جميعها باللون الأصفر؟ ",
-"لو خيروك |  بين أن تتكلم بالهمس فقط طوال الوقت أو أن تصرخ فقط طوال الوقت؟ ",
-"لو خيروك |  بين أن تمتلك زر إيقاف موقت للوقت أو أن تمتلك أزرار للعودة والذهاب عبر الوقت؟ ",
-"لو خيروك |  بين أن تعيش بدون موسيقى أبدًا أو أن تعيش بدون تلفاز أبدًا؟ ",
-"لو خيروك |  بين أن تعرف متى سوف تموت أو أن تعرف كيف سوف تموت؟ ",
-"لو خيروك |  بين العمل الذي تحلم به أو بين إيجاد شريك حياتك وحبك الحقيقي؟ ",
-"لو خيروك |  بين معاركة دب أو بين مصارعة تمساح؟ ",
-"لو خيروك |  بين إما الحصول على المال أو على المزيد من الوقت؟ ",
-"لو خيروك |  بين امتلاك قدرة التحدث بكل لغات العالم أو التحدث إلى الحيوانات؟ ",
-"لو خيروك |  بين أن تفوز في اليانصيب وبين أن تعيش مرة ثانية؟ ",
-"لو خيروك |  بأن لا يحضر أحد إما لحفل زفافك أو إلى جنازتك؟ ",
-"لو خيروك |  بين البقاء بدون هاتف لمدة شهر أو بدون إنترنت لمدة أسبوع؟ ",
-"لو خيروك |  بين العمل لأيام أقل في الأسبوع مع زيادة ساعات العمل أو العمل لساعات أقل في اليوم مع أيام أكثر؟ ",
-"لو خيروك |  بين مشاهدة الدراما في أيام السبعينيات أو مشاهدة الأعمال الدرامية للوقت الحالي؟ ",
-"لو خيروك |  بين التحدث عن كل شيء يدور في عقلك وبين عدم التحدث إطلاقًا؟ ",
-"لو خيروك |  بين مشاهدة فيلم بمفردك أو الذهاب إلى مطعم وتناول العشاء بمفردك؟ ",
-"لو خيروك |  بين قراءة رواية مميزة فقط أو مشاهدتها بشكل فيلم بدون القدرة على قراءتها؟ ",
-"لو خيروك |  بين أن تكون الشخص الأكثر شعبية في العمل أو المدرسة وبين أن تكون الشخص الأكثر ذكاءً؟ ",
-"لو خيروك |  بين إجراء المكالمات الهاتفية فقط أو إرسال الرسائل النصية فقط؟ ",
-"لو خيروك |  بين إنهاء الحروب في العالم أو إنهاء الجوع في العالم؟ ",
-"لو خيروك |  بين تغيير لون عينيك أو لون شعرك؟ ",
-"لو خيروك |  بين امتلاك كل عين لون وبين امتلاك نمش على خديك؟ ",
-"لو خيروك |  بين الخروج بالمكياج بشكل مستمر وبين الحصول على بشرة صحية ولكن لا يمكن لك تطبيق أي نوع من المكياج؟ ",
-"لو خيروك |  بين أن تصبحي عارضة أزياء وبين ميك اب أرتيست؟ ",
-"لو خيروك |  بين مشاهدة كرة القدم أو متابعة الأخبار؟ ",
-"لو خيروك |  بين موت شخصية بطل الدراما التي تتابعينها أو أن يبقى ولكن يكون العمل الدرامي سيء جدًا؟ ",
-"لو خيروك |  بين العيش في دراما قد سبق وشاهدتها ماذا تختارين بين الكوميديا والتاريخي؟ ",
-"لو خيروك |  بين امتلاك القدرة على تغيير لون شعرك متى تريدين وبين الحصول على مكياج من قبل خبير تجميل وذلك بشكل يومي؟ ",
-"لو خيروك |  بين نشر تفاصيل حياتك المالية وبين نشر تفاصيل حياتك العاطفية؟ ",
-"لو خيروك |  بين البكاء والحزن وبين اكتساب الوزن؟ ",
-"لو خيروك |  بين تنظيف الأطباق كل يوم وبين تحضير الطعام؟ ",
-"لو خيروك |  بين أن تتعطل سيارتك في نصف الطريق أو ألا تتمكنين من ركنها بطريقة صحيحة؟ ",
-"لو خيروك |  بين إعادة كل الحقائب التي تملكينها أو إعادة الأحذية الجميلة الخاصة بك؟ ",
-"لو خيروك |  بين قتل حشرة أو متابعة فيلم رعب؟ ",
-"لو خيروك |  بين امتلاك قطة أو كلب؟ ",
-"لو خيروك |  بين الصداقة والحب ",
-"لو خيروك |  بين تناول الشوكولا التي تحبين طوال حياتك ولكن لا يمكنك الاستماع إلى الموسيقى وبين الاستماع إلى الموسيقى ولكن لا يمكن لك تناول الشوكولا أبدًا؟ ",
-"لو خيروك |  بين مشاركة المنزل مع عائلة من الفئران أو عائلة من الأشخاص المزعجين الفضوليين الذين يتدخلون في كل كبيرة وصغيرة؟ ",
-} 
-return LuaTele.sendText(msg_chat_id,msg_id,texting[math.random(#texting)],'md')
-end
-end
-if text == "العكس" then
-if Redis:get(TheSharrawy.."Sharrawy:Status:Games"..msg.chat_id) then
-Redis:del(TheSharrawy.."Sharrawy:Set:Aks"..msg.chat_id)
-katu = {"باي","فهمت","موزين","اسمعك","احبك","موحلو","نضيف","حاره","ناصي","جوه","سريع","ونسه","طويل","سمين","ضعيف","شريف","شجاع","رحت","عدل","نشيط","شبعان","موعطشان","خوش ولد","اني","هادئ"}
-name = katu[math.random(#katu)]
-Redis:set(TheSharrawy.."Sharrawy:Game:Reflection"..msg.chat_id,name)
-name = string.gsub(name,"باي","هلو")
-name = string.gsub(name,"فهمت","مافهمت")
-name = string.gsub(name,"موزين","زين")
-name = string.gsub(name,"اسمعك","ماسمعك")
-name = string.gsub(name,"احبك","ماحبك")
-name = string.gsub(name,"موحلو","حلو")
-name = string.gsub(name,"نضيف","وصخ")
-name = string.gsub(name,"حاره","بارده")
-name = string.gsub(name,"ناصي","عالي")
-name = string.gsub(name,"جوه","فوك")
-name = string.gsub(name,"سريع","بطيء")
-name = string.gsub(name,"ونسه","ضوجه")
-name = string.gsub(name,"طويل","قزم")
-name = string.gsub(name,"سمين","ضعيف")
-name = string.gsub(name,"ضعيف","قوي")
-name = string.gsub(name,"شريف","كواد")
-name = string.gsub(name,"شجاع","جبان")
-name = string.gsub(name,"رحت","اجيت")
-name = string.gsub(name,"عدل","ميت")
-name = string.gsub(name,"نشيط","كسول")
-name = string.gsub(name,"شبعان","جوعان")
-name = string.gsub(name,"موعطشان","عطشان")
-name = string.gsub(name,"خوش ولد","موخوش ولد")
-name = string.gsub(name,"اني","مطي")
-name = string.gsub(name,"هادئ","عصبي")
-return LuaTele.sendText(msg_chat_id,msg_id,"⋄︙اسرع واحد يدز العكس ~ {"..name.."}","md",true)  
-end
-end
-if text == "بات" or text == "محيبس" then   
-if Redis:get(TheSharrawy.."Sharrawy:Status:Games"..msg.chat_id) then 
-local reply_markup = LuaTele.replyMarkup{
-type = 'inline',
-data = {
-{
-{text = '𝟏 » { 👊 }', data = '/Mahibes1'}, {text = '𝟐 » { 👊 }', data = '/Mahibes2'}, 
-},
-{
-{text = '𝟑 » { 👊 }', data = '/Mahibes3'}, {text = '𝟒 » { 👊 }', data = '/Mahibes4'}, 
-},
-{
-{text = '𝟓 » { 👊 }', data = '/Mahibes5'}, {text = '𝟔 » { 👊 }', data = '/Mahibes6'}, 
-},
-}
-}
-return LuaTele.sendText(msg_chat_id,msg_id, [[*
-⋄︙ لعبه المحيبس هي لعبة الحظ 
-⋄︙جرب حظك ويه البوت واتونس 
-⋄︙كل ما عليك هوا الضغط على احدى العضمات في الازرار
-*]],"md",false, false, false, false, reply_markup)
-end
-end
-if text == "خمن" or text == "تخمين" then   
-if Redis:get(TheSharrawy.."Sharrawy:Status:Games"..msg.chat_id) then
-Num = math.random(1,20)
-Redis:set(TheSharrawy.."Sharrawy:Game:Estimate"..msg.chat_id..msg.sender.user_id,Num)  
-return LuaTele.sendText(msg_chat_id,msg_id,"\n⋄︙اهلا بك عزيزي في لعبة التخمين :\nٴ━━━━━━━━━━\n".."⋄︙ملاحظه لديك { 3 } محاولات فقط فكر قبل ارسال تخمينك \n\n".."⋄︙سيتم تخمين عدد ما بين ال {1 و 20} اذا تعتقد انك تستطيع الفوز جرب واللعب الان ؟ ","md",true)  
-end
-end
-if text == "المختلف" then
-if Redis:get(TheSharrawy.."Sharrawy:Status:Games"..msg.chat_id) then
-mktlf = {"😸","☠","🐼","🐇","🌑","🌚","⭐️","✨","⛈","🌥","⛄️","👨‍🔬","👨‍💻","👨‍🔧","🧚‍♀","??‍♂","🧝‍♂","🙍‍♂","🧖‍♂","👬","🕒","🕤","⌛️","📅",};
-name = mktlf[math.random(#mktlf)]
-Redis:set(TheSharrawy.."Sharrawy:Game:Difference"..msg.chat_id,name)
-name = string.gsub(name,"😸","😹😹😹😹😹😹😹😹😸😹😹😹😹")
-name = string.gsub(name,"☠","💀💀💀💀💀💀💀☠💀💀💀💀💀")
-name = string.gsub(name,"🐼","👻👻👻🐼👻👻👻👻👻👻👻")
-name = string.gsub(name,"🐇","🕊🕊🕊🕊🕊🐇🕊🕊🕊🕊")
-name = string.gsub(name,"🌑","🌚🌚🌚🌚🌚🌑🌚🌚🌚")
-name = string.gsub(name,"🌚","🌑🌑🌑🌑🌑🌚🌑🌑🌑")
-name = string.gsub(name,"⭐️","🌟🌟🌟🌟🌟🌟🌟🌟⭐️🌟🌟🌟")
-name = string.gsub(name,"✨","💫💫💫💫💫✨💫💫💫💫")
-name = string.gsub(name,"⛈","🌨🌨🌨🌨🌨⛈🌨🌨🌨🌨")
-name = string.gsub(name,"🌥","⛅️⛅️⛅️⛅️⛅️⛅️🌥⛅️⛅️⛅️⛅️")
-name = string.gsub(name,"⛄️","☃☃☃☃☃☃⛄️☃☃☃☃")
-name = string.gsub(name,"👨‍🔬","👩‍🔬👩‍🔬👩‍🔬👩‍🔬👩‍🔬👩‍🔬👩‍🔬👩‍🔬👨‍🔬👩‍🔬👩‍🔬👩‍🔬")
-name = string.gsub(name,"👨‍💻","👩‍💻👩‍??👩‍‍💻👩‍‍??👩‍‍💻👨‍💻??‍💻👩‍💻👩‍💻")
-name = string.gsub(name,"👨‍🔧","👩‍🔧👩‍🔧👩‍🔧👩‍🔧👩‍🔧👩‍🔧👨‍🔧👩‍🔧")
-name = string.gsub(name,"👩‍🍳","👨‍🍳👨‍🍳👨‍🍳👨‍🍳👨‍🍳👩‍🍳👨‍🍳👨‍🍳??‍🍳")
-name = string.gsub(name,"🧚‍♀","🧚‍♂🧚‍♂🧚‍♂🧚‍♂🧚‍♀🧚‍♂🧚‍♂")
-name = string.gsub(name,"🧜‍♂","🧜‍♀🧜‍♀🧜‍♀🧜‍♀🧜‍♀🧚‍♂🧜‍♀🧜‍♀🧜‍♀")
-name = string.gsub(name,"🧝‍♂","🧝‍♀🧝‍♀🧝‍♀🧝‍♀🧝‍♀🧝‍♂🧝‍♀🧝‍♀🧝‍♀")
-name = string.gsub(name,"🙍‍♂️","🙎‍♂️🙎‍♂️🙎‍♂️🙎‍♂️🙎‍♂️🙍‍♂️🙎‍♂️🙎‍♂️🙎‍♂️")
-name = string.gsub(name,"🧖‍♂️","🧖‍♀️🧖‍♀️🧖‍♀️🧖‍♀️🧖‍♀️🧖‍♂️🧖‍♀️🧖‍♀️🧖‍♀️🧖‍♀️")
-name = string.gsub(name,"👬","👭👭👭👭👭👬👭👭👭")
-name = string.gsub(name,"👨‍👨‍👧","👨‍👨‍👦👨‍👨‍👦👨‍👨‍👦👨‍👨‍👦👨‍👨‍👧👨‍👨‍👦👨‍👨‍👦")
-name = string.gsub(name,"🕒","🕒🕒🕒🕒🕒🕒🕓🕒🕒🕒")
-name = string.gsub(name,"🕤","🕥🕥🕥🕥🕥🕤🕥🕥🕥")
-name = string.gsub(name,"⌛️","⏳⏳⏳⏳⏳⏳⌛️⏳⏳")
-name = string.gsub(name,"📅","📆📆📆📆📆📆📅📆📆")
-return LuaTele.sendText(msg_chat_id,msg_id,"⋄︙اسرع واحد يدز الاختلاف ~ {"..name.."}","md",true)  
-end
-end
-if text == "امثله" then
-if Redis:get(TheSharrawy.."Sharrawy:Status:Games"..msg.chat_id) then
-mthal = {"جوز","ضراطه","الحبل","الحافي","شقره","بيدك","سلايه","النخله","الخيل","حداد","المبلل","يركص","قرد","العنب","العمه","الخبز","بالحصاد","شهر","شكه","يكحله",};
-name = mthal[math.random(#mthal)]
-Redis:set(TheSharrawy.."Sharrawy:Game:Example"..msg.chat_id,name)
-name = string.gsub(name,"جوز","ينطي____للماعده سنون")
-name = string.gsub(name,"ضراطه","الي يسوق المطي يتحمل___")
-name = string.gsub(name,"بيدك","اكل___محد يفيدك")
-name = string.gsub(name,"الحافي","تجدي من___نعال")
-name = string.gsub(name,"شقره","مع الخيل يا___")
-name = string.gsub(name,"النخله","الطول طول___والعقل عقل الصخلة")
-name = string.gsub(name,"سلايه","بالوجه امراية وبالظهر___")
-name = string.gsub(name,"الخيل","من قلة___شدو على الچلاب سروج")
-name = string.gsub(name,"حداد","موكل من صخم وجهه كال آني___")
-name = string.gsub(name,"المبلل","___ما يخاف من المطر")
-name = string.gsub(name,"الحبل","اللي تلدغة الحية يخاف من جرة___")
-name = string.gsub(name,"يركص","المايعرف___يكول الكاع عوجه")
-name = string.gsub(name,"العنب","المايلوح___يكول حامض")
-name = string.gsub(name,"العمه","___إذا حبت الچنة ابليس يدخل الجنة")
-name = string.gsub(name,"الخبز","انطي___للخباز حتى لو ياكل نصه")
-name = string.gsub(name,"باحصاد","اسمة___ومنجله مكسور")
-name = string.gsub(name,"شهر","امشي__ولا تعبر نهر")
-name = string.gsub(name,"شكه","يامن تعب يامن__يا من على الحاضر لكة")
-name = string.gsub(name,"القرد","__بعين امه غزال")
-name = string.gsub(name,"يكحله","اجه___عماها")
-return LuaTele.sendText(msg_chat_id,msg_id,"⋄︙اسرع واحد يكمل المثل ~ {"..name.."}","md",true)  
-end
-end
-if text and text:match("^بيع مجوهراتي (%d+)$") then
-local NumGame = text:match("^بيع مجوهراتي (%d+)$") 
-if tonumber(NumGame) == tonumber(0) then
-return LuaTele.sendText(msg_chat_id,msg_id,"\n*⋄︙لا استطيع البيع اقل من 1 *","md",true)  
-end
-local NumberGame = Redis:get(TheSharrawy.."Sharrawy:Num:Add:Games"..msg.chat_id..msg.sender.user_id)
-if tonumber(NumberGame) == tonumber(0) then
-return LuaTele.sendText(msg_chat_id,msg_id,"⋄︙ليس لديك جواهر من الالعاب \n⋄︙اذا كنت تريد ربح الجواهر \n⋄︙ارسل الالعاب وابدأ اللعب ! ","md",true)  
-end
-if tonumber(NumGame) > tonumber(NumberGame) then
-return LuaTele.sendText(msg_chat_id,msg_id,"\n⋄︙ليس لديك جواهر بهاذا العدد \n⋄︙لزيادة مجوهراتك في اللعبه \n⋄︙ارسل الالعاب وابدأ اللعب !","md",true)   
-end
-local NumberGet = (NumGame * 50)
-Redis:decrby(TheSharrawy.."Sharrawy:Num:Add:Games"..msg.chat_id..msg.sender.user_id,NumGame)  
-Redis:incrby(TheSharrawy.."Sharrawy:Num:Message:User"..msg.chat_id..":"..msg.sender.user_id,NumGame)  
-return LuaTele.sendText(msg_chat_id,msg_id,"⋄︙تم خصم *~ { "..NumGame.." }* من مجوهراتك \n⋄︙وتم اضافة* ~ { "..(NumGame * 50).." } رساله الى رسالك *","md",true)  
-end 
-if text and text:match("^اضف مجوهرات (%d+)$") and msg.reply_to_message_id ~= 0 then
-if ChannelJoin(msg) == false then
-local reply_markup = LuaTele.replyMarkup{type = 'inline',data = {{{text = 'اضغط للاشتراك', url = 't.me/'..Redis:get(TheSharrawy..'Sharrawy:Channel:Join')}, },}}
-return LuaTele.sendText(msg.chat_id,msg.id,'*\n⋄︙عليك الاشتراك في قناة البوت لاستخذام الاوامر*',"md",false, false, false, false, reply_markup)
-end
-if not msg.Addictive then
-return LuaTele.sendText(msg_chat_id,msg_id,'\n*⋄︙هاذا الامر يخص { '..Controller_Num(7)..' }* ',"md",true)  
-end
-local Message_Reply = LuaTele.getMessage(msg.chat_id, msg.reply_to_message_id)
-local UserInfo = LuaTele.getUser(Message_Reply.sender.user_id)
-if UserInfo.message == "Invalid user ID" then
-return LuaTele.sendText(msg_chat_id,msg_id,"\n⋄︙عذرآ تستطيع فقط استخدام الامر على المستخدمين ","md",true)  
-end
-if UserInfo and UserInfo.type and UserInfo.type.luatele == "userTypeBot" then
-return LuaTele.sendText(msg_chat_id,msg_id,"\n⋄︙عذرآ لا تستطيع استخدام الامر على البوت ","md",true)  
-end
-Redis:incrby(TheSharrawy.."Sharrawy:Num:Add:Games"..msg.chat_id..Message_Reply.sender.user_id, text:match("^اضف مجوهرات (%d+)$"))  
-return LuaTele.sendText(msg_chat_id,msg_id,Reply_Status(Message_Reply.sender.user_id,"⋄︙تم اضافه له { "..text:match("^اضف مجوهرات (%d+)$").." } من المجوهرات").Reply,"md",true)  
-end
+
 if text and text:match("^اضف رسائل (%d+)$") and msg.reply_to_message_id ~= 0 then
 if ChannelJoin(msg) == false then
 local reply_markup = LuaTele.replyMarkup{type = 'inline',data = {{{text = 'اضغط للاشتراك', url = 't.me/'..Redis:get(TheSharrawy..'Sharrawy:Channel:Join')}, },}}
@@ -10217,14 +9413,7 @@ end
 Redis:incrby(TheSharrawy.."Sharrawy:Num:Message:User"..msg.chat_id..":"..Message_Reply.sender.user_id, text:match("^اضف رسائل (%d+)$"))  
 return LuaTele.sendText(msg_chat_id,msg_id,Reply_Status(Message_Reply.sender.user_id,"⋄︙تم اضافه له { "..text:match("^اضف رسائل (%d+)$").." } من الرسائل").Reply,"md",true)  
 end
-if text == "مجوهراتي" then 
-local Num = Redis:get(TheSharrawy.."Sharrawy:Num:Add:Games"..msg.chat_id..msg.sender.user_id) or 0
-if Num == 0 then 
-return LuaTele.sendText(msg_chat_id,msg_id, "⋄︙لم تفز بأي مجوهره ","md",true)  
-else
-return LuaTele.sendText(msg_chat_id,msg_id, "⋄︙عدد الجواهر التي ربحتها * "..Num.." *","md",true)  
-end
-end
+
 
 if text == 'ترتيب الاوامر' then
 if not msg.Managers then
@@ -13294,6 +12483,5 @@ end
 
 luatele.run(CallBackLua)
  
-
 
 
