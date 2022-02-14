@@ -9257,14 +9257,14 @@ end
 if text == (Redis:get(TheSharrawy.."Sharrawy:Name:Bot") or "شعراوي") then
 local NamesBot = (Redis:get(TheSharrawy.."Sharrawy:Name:Bot") or "شعراوي")
 local NameBots = {
-..NamesBot.. " تفضل؟",
+"."..NamesBot.. " تفضل؟",
 }
 return LuaTele.sendText(msg_chat_id,msg_id, NameBots[math.random(#NameBots)],"md",true)  
 end
 if text == "بوت" then
 local NamesBot = (Redis:get(TheSharrawy.."Sharrawy:Name:Bot") or "شعراوي")
 local BotName = {
-..NamesBot.. " تفضل؟",
+"."..NamesBot.. " تفضل؟",
 }
 return LuaTele.sendText(msg_chat_id,msg_id,BotName[math.random(#BotName)],"md",true)   
 end
