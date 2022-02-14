@@ -3391,7 +3391,7 @@ Redis:sadd(TheSharrawy.."Sharrawy:Addictive:Group"..msg_chat_id,UserId_Info.id)
 return LuaTele.sendText(msg_chat_id,msg_id,Reply_Status(UserId_Info.id,"⋄︙تم ترقيته ادمن  ").Reply,"md",true)  
 end
 end
-if UserName[1] == "مميز" then
+if UserName[1] == "م" then
 if not msg.Addictive then
 return LuaTele.sendText(msg_chat_id,msg_id,'\n*⋄︙هاذا الامر يخص { '..Controller_Num(7)..' }* ',"md",true)  
 end
@@ -3524,7 +3524,7 @@ Redis:sadd(TheSharrawy.."Sharrawy:Addictive:Group"..msg_chat_id,Message_Reply.se
 return LuaTele.sendText(msg_chat_id,msg_id,Reply_Status(Message_Reply.sender.user_id,"⋄︙تم ترقيته ادمن  ").Reply,"md",true)  
 end
 end
-if TextMsg == "مميز" then
+if TextMsg == "م" then
 if not msg.Addictive then
 return LuaTele.sendText(msg_chat_id,msg_id,'\n*⋄︙هاذا الامر يخص { '..Controller_Num(7)..' }* ',"md",true)  
 end
@@ -3663,7 +3663,7 @@ Redis:sadd(TheSharrawy.."Sharrawy:Addictive:Group"..msg_chat_id,UserId[2])
 return LuaTele.sendText(msg_chat_id,msg_id,Reply_Status(UserId[2],"⋄︙تم ترقيته ادمن  ").Reply,"md",true)  
 end
 end
-if UserId[1] == "مميز" then
+if UserId[1] == "م" then
 if not msg.Addictive then
 return LuaTele.sendText(msg_chat_id,msg_id,'\n*⋄︙هاذا الامر يخص { '..Controller_Num(7)..' }* ',"md",true)  
 end
@@ -7905,8 +7905,8 @@ if Redis:sismember(TheSharrawy..'Sharrawy:Managers:Group'..msg_chat_id, Message_
 own = "مدير ،" else own = "" end
 if Redis:sismember(TheSharrawy..'Sharrawy:Addictive:Group'..msg_chat_id, Message_Reply.sender.user_id) then
 mod = "ادمن ،" else mod = "" end
-if Redis:sismember(TheSharrawy..'Sharrawy:vip:Group'..msg_chat_id, Message_Reply.sender.user_id) then
-vip = "مميز ،" else vip = ""
+if Redis:sismember(TheSharrawy..'Sharrawy:Vip:Group'..msg_chat_id, Message_Reply.sender.user_id) then
+Vip = "مميز ،" else Vip = ""
 end
 if The_ControllerAll(Message_Reply.sender.user_id) == true then
 Rink = 1
@@ -7939,7 +7939,7 @@ Redis:srem(TheSharrawy.."Sharrawy:Originators:Group"..msg_chat_id, Message_Reply
 Redis:srem(TheSharrawy.."Sharrawy:Managers:Group"..msg_chat_id, Message_Reply.sender.user_id)
 Redis:srem(TheSharrawy.."Sharrawy:Addictive:Group"..msg_chat_id, Message_Reply.sender.user_id)
 Redis:srem(TheSharrawy.."Sharrawy:Distinguished:Group"..msg_chat_id, Message_Reply.sender.user_id)
-Redis:srem(TheSharrawy.."Sharrawy:vip:Group"..msg_chat_id, Message_Reply.sender.user_id)
+Redis:srem(TheSharrawy.."Sharrawy:Vip:Group"..msg_chat_id, Message_Reply.sender.user_id)
 elseif msg.Developers then
 if Rink == 2 or Rink < 2 then
 return LuaTele.sendText(msg_chat_id,msg_id,"\n*⋄︙لا يمكن تنزيل رتبه نفس رتبتك ولا اعلى من رتبتك *","md",true)  
@@ -7949,7 +7949,7 @@ Redis:srem(TheSharrawy.."Sharrawy:Originators:Group"..msg_chat_id, Message_Reply
 Redis:srem(TheSharrawy.."Sharrawy:Managers:Group"..msg_chat_id, Message_Reply.sender.user_id)
 Redis:srem(TheSharrawy.."Sharrawy:Addictive:Group"..msg_chat_id, Message_Reply.sender.user_id)
 Redis:srem(TheSharrawy.."Sharrawy:Distinguished:Group"..msg_chat_id, Message_Reply.sender.user_id)
-Redis:srem(TheSharrawy.."Sharrawy:vip:Group"..msg_chat_id, Message_Reply.sender.user_id)
+Redis:srem(TheSharrawy.."Sharrawy:Vip:Group"..msg_chat_id, Message_Reply.sender.user_id)
 elseif msg.TheBasics then
 if Rink == 3 or Rink < 3 then
 return LuaTele.sendText(msg_chat_id,msg_id,"\n*⋄︙لا يمكن تنزيل رتبه نفس رتبتك ولا اعلى من رتبتك *","md",true)  
@@ -7958,7 +7958,7 @@ Redis:srem(TheSharrawy.."Sharrawy:Originators:Group"..msg_chat_id, Message_Reply
 Redis:srem(TheSharrawy.."Sharrawy:Managers:Group"..msg_chat_id, Message_Reply.sender.user_id)
 Redis:srem(TheSharrawy.."Sharrawy:Addictive:Group"..msg_chat_id, Message_Reply.sender.user_id)
 Redis:srem(TheSharrawy.."Sharrawy:Distinguished:Group"..msg_chat_id, Message_Reply.sender.user_id)
-Redis:srem(TheSharrawy.."Sharrawy:vip:Group"..msg_chat_id, Message_Reply.sender.user_id)
+Redis:srem(TheSharrawy.."Sharrawy:Vip:Group"..msg_chat_id, Message_Reply.sender.user_id)
 elseif msg.Originators then
 if Rink == 4 or Rink < 4 then
 return LuaTele.sendText(msg_chat_id,msg_id,"\n*⋄︙لا يمكن تنزيل رتبه نفس رتبتك ولا اعلى من رتبتك *","md",true)  
@@ -7966,21 +7966,21 @@ end
 Redis:srem(TheSharrawy.."Sharrawy:Managers:Group"..msg_chat_id, Message_Reply.sender.user_id)
 Redis:srem(TheSharrawy.."Sharrawy:Addictive:Group"..msg_chat_id, Message_Reply.sender.user_id)
 Redis:srem(TheSharrawy.."Sharrawy:Distinguished:Group"..msg_chat_id, Message_Reply.sender.user_id)
-Redis:srem(TheSharrawy.."Sharrawy:vip:Group"..msg_chat_id, Message_Reply.sender.user_id)
+Redis:srem(TheSharrawy.."Sharrawy:Vip:Group"..msg_chat_id, Message_Reply.sender.user_id)
 elseif msg.Managers then
 if Rink == 5 or Rink < 5 then
 return LuaTele.sendText(msg_chat_id,msg_id,"\n*⋄︙لا يمكن تنزيل رتبه نفس رتبتك ولا اعلى من رتبتك *","md",true)  
 end
 Redis:srem(TheSharrawy.."Sharrawy:Addictive:Group"..msg_chat_id, Message_Reply.sender.user_id)
 Redis:srem(TheSharrawy.."Sharrawy:Distinguished:Group"..msg_chat_id, Message_Reply.sender.user_id)
-Redis:srem(TheSharrawy.."Sharrawy:vip:Group"..msg_chat_id, Message_Reply.sender.user_id)
+Redis:srem(TheSharrawy.."Sharrawy:Vip:Group"..msg_chat_id, Message_Reply.sender.user_id)
 elseif msg.Addictive then
 if Rink == 6 or Rink < 6 then
 return LuaTele.sendText(msg_chat_id,msg_id,"\n*⋄︙لا يمكن تنزيل رتبه نفس رتبتك ولا اعلى من رتبتك *","md",true)  
 end
 Redis:srem(TheSharrawy.."Sharrawy:Distinguished:Group"..msg_chat_id, Message_Reply.sender.user_id)
 end
-return LuaTele.sendText(msg_chat_id,msg_id,"\n*⋄︙تم تنزيل الشخص من الرتب التاليه { "..dev..""..devs..""..crr..""..cr..""..own..""..mod..""..vip.." *}","md",true)  
+return LuaTele.sendText(msg_chat_id,msg_id,"\n*⋄︙تم تنزيل الشخص من الرتب التاليه { "..dev..""..devs..""..crr..""..cr..""..own..""..mod..""..Vip.." *}","md",true)  
 end
 
 if text and text:match('^تنزيل الكل @(%S+)$') then
@@ -8015,7 +8015,7 @@ own = "مدير ،" else own = "" end
 if Redis:sismember(TheSharrawy..'Sharrawy:Addictive:Group'..msg_chat_id, UserId_Info.id) then
 mod = "ادمن ،" else mod = "" end
 if Redis:sismember(TheSharrawy..'Sharrawy:Distinguished:Group'..msg_chat_id, UserId_Info.id) then
-vip = "مميز ،" else vip = ""
+Vip = "مميز ،" else Vip = ""
 end
 if The_ControllerAll(UserId_Info.id) == true then
 Rink = 1
@@ -8048,7 +8048,7 @@ Redis:srem(TheSharrawy.."Sharrawy:Originators:Group"..msg_chat_id, UserId_Info.i
 Redis:srem(TheSharrawy.."Sharrawy:Managers:Group"..msg_chat_id, UserId_Info.id)
 Redis:srem(TheSharrawy.."Sharrawy:Addictive:Group"..msg_chat_id, UserId_Info.id)
 Redis:srem(TheSharrawy.."Sharrawy:Distinguished:Group"..msg_chat_id, UserId_Info.id)
-Redis:srem(TheSharrawy.."Sharrawy:vip:Group"..msg_chat_id, Message_Reply.sender.user_id)
+Redis:srem(TheSharrawy.."Sharrawy:Vip:Group"..msg_chat_id, Message_Reply.sender.user_id)
 elseif msg.Developers then
 if Rink == 2 or Rink < 2 then
 return LuaTele.sendText(msg_chat_id,msg_id,"\n*⋄︙لا يمكن تنزيل رتبه نفس رتبتك ولا اعلى من رتبتك *","md",true)  
@@ -8058,7 +8058,7 @@ Redis:srem(TheSharrawy.."Sharrawy:Originators:Group"..msg_chat_id, UserId_Info.i
 Redis:srem(TheSharrawy.."Sharrawy:Managers:Group"..msg_chat_id, UserId_Info.id)
 Redis:srem(TheSharrawy.."Sharrawy:Addictive:Group"..msg_chat_id, UserId_Info.id)
 Redis:srem(TheSharrawy.."Sharrawy:Distinguished:Group"..msg_chat_id, UserId_Info.id)
-Redis:srem(TheSharrawy.."Sharrawy:vip:Group"..msg_chat_id, Message_Reply.sender.user_id)
+Redis:srem(TheSharrawy.."Sharrawy:Vip:Group"..msg_chat_id, Message_Reply.sender.user_id)
 elseif msg.TheBasics then
 if Rink == 3 or Rink < 3 then
 return LuaTele.sendText(msg_chat_id,msg_id,"\n*⋄︙لا يمكن تنزيل رتبه نفس رتبتك ولا اعلى من رتبتك *","md",true)  
@@ -8067,7 +8067,7 @@ Redis:srem(TheSharrawy.."Sharrawy:Originators:Group"..msg_chat_id, UserId_Info.i
 Redis:srem(TheSharrawy.."Sharrawy:Managers:Group"..msg_chat_id, UserId_Info.id)
 Redis:srem(TheSharrawy.."Sharrawy:Addictive:Group"..msg_chat_id, UserId_Info.id)
 Redis:srem(TheSharrawy.."Sharrawy:Distinguished:Group"..msg_chat_id, UserId_Info.id)
-Redis:srem(TheSharrawy.."Sharrawy:vip:Group"..msg_chat_id, Message_Reply.sender.user_id)
+Redis:srem(TheSharrawy.."Sharrawy:Vip:Group"..msg_chat_id, Message_Reply.sender.user_id)
 elseif msg.Originators then
 if Rink == 4 or Rink < 4 then
 return LuaTele.sendText(msg_chat_id,msg_id,"\n*⋄︙لا يمكن تنزيل رتبه نفس رتبتك ولا اعلى من رتبتك *","md",true)  
@@ -8075,7 +8075,7 @@ end
 Redis:srem(TheSharrawy.."Sharrawy:Managers:Group"..msg_chat_id, UserId_Info.id)
 Redis:srem(TheSharrawy.."Sharrawy:Addictive:Group"..msg_chat_id, UserId_Info.id)
 Redis:srem(TheSharrawy.."Sharrawy:Distinguished:Group"..msg_chat_id, UserId_Info.id)
-Redis:srem(TheSharrawy.."Sharrawy:vip:Group"..msg_chat_id, Message_Reply.sender.user_id)
+Redis:srem(TheSharrawy.."Sharrawy:Vip:Group"..msg_chat_id, Message_Reply.sender.user_id)
 elseif msg.Managers then
 if Rink == 5 or Rink < 5 then
 return LuaTele.sendText(msg_chat_id,msg_id,"\n*⋄︙لا يمكن تنزيل رتبه نفس رتبتك ولا اعلى من رتبتك *","md",true)  
@@ -8087,9 +8087,9 @@ if Rink == 6 or Rink < 6 then
 return LuaTele.sendText(msg_chat_id,msg_id,"\n*⋄︙لا يمكن تنزيل رتبه نفس رتبتك ولا اعلى من رتبتك *","md",true)  
 end
 Redis:srem(TheSharrawy.."Sharrawy:Distinguished:Group"..msg_chat_id, UserId_Info.id)
-Redis:srem(TheSharrawy.."Sharrawy:vip:Group"..msg_chat_id, Message_Reply.sender.user_id)
+Redis:srem(TheSharrawy.."Sharrawy:Vip:Group"..msg_chat_id, Message_Reply.sender.user_id)
 end
-return LuaTele.sendText(msg_chat_id,msg_id,"\n*⋄︙تم تنزيل الشخص من الرتب التاليه { "..dev..""..devs..""..crr..""..cr..""..own..""..mod..""..vip.." *}","md",true)  
+return LuaTele.sendText(msg_chat_id,msg_id,"\n*⋄︙تم تنزيل الشخص من الرتب التاليه { "..dev..""..devs..""..crr..""..cr..""..own..""..mod..""..Vip.." *}","md",true)  
 end
 
 if text == ('رفع مشرف') and msg.reply_to_message_id ~= 0 then
@@ -9257,14 +9257,14 @@ end
 if text == (Redis:get(TheSharrawy.."Sharrawy:Name:Bot") or "شعراوي") then
 local NamesBot = (Redis:get(TheSharrawy.."Sharrawy:Name:Bot") or "شعراوي")
 local NameBots = {
-"اهلا "..NamesBot.. " شتريد؟",
+"..NamesBot.. " تفضل؟",
 }
 return LuaTele.sendText(msg_chat_id,msg_id, NameBots[math.random(#NameBots)],"md",true)  
 end
 if text == "بوت" then
 local NamesBot = (Redis:get(TheSharrawy.."Sharrawy:Name:Bot") or "شعراوي")
 local BotName = {
-"اهلا "..NamesBot.. " شتريد؟",
+"..NamesBot.. " تفضل؟",
 }
 return LuaTele.sendText(msg_chat_id,msg_id,BotName[math.random(#BotName)],"md",true)   
 end
