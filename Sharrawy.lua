@@ -7922,7 +7922,7 @@ elseif Redis:sismember(TheSharrawy.."Sharrawy:Addictive:Group"..msg_chat_id, Mes
 Rink = 6
 elseif Redis:sismember(TheSharrawy.."Sharrawy:Distinguished:Group"..msg_chat_id, Message_Reply.sender.user_id) then
 Rink = 7
-else
+elseif Redis:sismember(TheSharrawy.."Sharrawy:Vip:Group"..msg_chat_id, Message_Reply.sender.user_id) then
 Rink = 8
 end
 if StatusCanOrNotCan(msg_chat_id,Message_Reply.sender.user_id) == false then
@@ -8031,7 +8031,7 @@ elseif Redis:sismember(TheSharrawy.."Sharrawy:Addictive:Group"..msg_chat_id, Use
 Rink = 6
 elseif Redis:sismember(TheSharrawy.."Sharrawy:Distinguished:Group"..msg_chat_id, UserId_Info.id) then
 Rink = 7
-else
+elseif Redis:sismember(TheSharrawy.."Sharrawy:Vip:Group"..msg_chat_id, Message_Reply.sender.user_id) then
 Rink = 8
 end
 if StatusCanOrNotCan(msg_chat_id,UserId_Info.id) == false then
