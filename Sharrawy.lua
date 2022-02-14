@@ -4289,7 +4289,7 @@ return false
 end
 end
 if text == ("مسح الردود المتعدده عام") then
-if not msg.ControllerBot then 
+if not msg.DevelopersQ then 
 return LuaTele.sendText(msg_chat_id,msg_id,'\n*⋄︙هاذا الامر يخص { '..Controller_Num(1)..' }* ',"md",true)  
 end
 local list = Redis:smembers(TheSharrawy.."Sharrawy11:List:Rd:Sudo")
@@ -4302,7 +4302,7 @@ end
  LuaTele.sendText(msg_chat_id,msg_id,"تم حذف ردود المتعدده")
 end
 if text == ("الردود المتعدده عام") then
-if not msg.ControllerBot then 
+if not msg.DevelopersQ then 
 return LuaTele.sendText(msg_chat_id,msg_id,'\n*⋄︙هاذا الامر يخص { '..Controller_Num(1)..' }* ',"md",true)  
 end
 local list = Redis:smembers(TheSharrawy.."Sharrawy11:List:Rd:Sudo")
@@ -4317,14 +4317,14 @@ end
  LuaTele.sendText(msg_chat_id,msg_id,"["..text.."]")
 end
 if text == "اضف رد متعدد عام" then
-if not msg.ControllerBot then 
+if not msg.DevelopersQ then 
 return LuaTele.sendText(msg_chat_id,msg_id,'\n*⋄︙هاذا الامر يخص { '..Controller_Num(1)..' }* ',"md",true)  
 end
 Redis:set(TheSharrawy.."Sharrawy11:Set:Rd"..msg.sender.user_id..":"..msg.chat_id,true)
 return  LuaTele.sendText(msg_chat_id,msg_id,"ارسل الرد الذي اريد اضافته")
 end
 if text == "حذف رد متعدد عام" then
-if not msg.ControllerBot then 
+if not msg.DevelopersQ then 
 return LuaTele.sendText(msg_chat_id,msg_id,'\n*⋄︙هاذا الامر يخص { '..Controller_Num(1)..' }* ',"md",true)  
 end
 Redis:set(TheSharrawy.."Sharrawy11:Set:On"..msg.sender.user_id..":"..msg.chat_id,true)
@@ -5803,7 +5803,7 @@ LuaTele.sendText(msg_chat_id,msg_id,Reply_Status(msg.sender.user_id,"⋄︙تم 
 return false
 end 
 if text == "قفل الكل" then 
-if not msg.ControllerBot then 
+if not msg.DevelopersQ then 
 return LuaTele.sendText(msg_chat_id,msg_id,'\n*⋄︙هاذا الامر يخص { '..Controller_Num(1)..' }* ',"md",true)  
 end
 if ChannelJoin(msg) == false then
@@ -7893,6 +7893,8 @@ end
 if UserInfo and UserInfo.type and UserInfo.type.luatele == "userTypeBot" then
 return LuaTele.sendText(msg_chat_id,msg_id,"\n⋄︙عذرآ لا تستطيع استخدام الامر على البوت ","md",true)  
 end
+if Redis:sismember(TheSharrawy.."Sharrawy:DevelopersQ:Groups",Message_Reply.sender.user_id) then
+devs = "المطور الثانوي ،" else devs = "" end
 if Redis:sismember(TheSharrawy.."Sharrawy:Developers:Groups",Message_Reply.sender.user_id) then
 dev = "المطور ،" else dev = "" end
 if Redis:sismember(TheSharrawy.."Sharrawy:TheBasics:Group"..msg_chat_id, Message_Reply.sender.user_id) then
@@ -7930,6 +7932,7 @@ if msg.ControllerBot then
 if Rink == 1 or Rink < 1 then
 return LuaTele.sendText(msg_chat_id,msg_id,"\n*⋄︙لا يمكن تنزيل رتبه نفس رتبتك ولا اعلى من رتبتك *","md",true)  
 end
+Redis:srem(TheSharrawy.."Sharrawy:DevelopersQ:Groups",Message_Reply.sender.user_id)
 Redis:srem(TheSharrawy.."Sharrawy:Developers:Groups",Message_Reply.sender.user_id)
 Redis:srem(TheSharrawy.."Sharrawy:TheBasics:Group"..msg_chat_id, Message_Reply.sender.user_id)
 Redis:srem(TheSharrawy.."Sharrawy:Originators:Group"..msg_chat_id, Message_Reply.sender.user_id)
@@ -7972,7 +7975,7 @@ return LuaTele.sendText(msg_chat_id,msg_id,"\n*⋄︙لا يمكن تنزيل ر
 end
 Redis:srem(TheSharrawy.."Sharrawy:Distinguished:Group"..msg_chat_id, Message_Reply.sender.user_id)
 end
-return LuaTele.sendText(msg_chat_id,msg_id,"\n*⋄︙تم تنزيل الشخص من الرتب التاليه { "..dev..""..crr..""..cr..""..own..""..mod..""..vip.." *}","md",true)  
+return LuaTele.sendText(msg_chat_id,msg_id,"\n*⋄︙تم تنزيل الشخص من الرتب التاليه { "..dev..""..devs..""..crr..""..cr..""..own..""..mod..""..vip.." *}","md",true)  
 end
 
 if text and text:match('^تنزيل الكل @(%S+)$') then
@@ -7994,6 +7997,8 @@ end
 if UserName and UserName:match('(%S+)[Bb][Oo][Tt]') then
 return LuaTele.sendText(msg_chat_id,msg_id,"\n⋄︙عذرآ لا تستطيع استخدام معرف البوت ","md",true)  
 end
+if Redis:sismember(TheSharrawy.."Sharrawy:DevelopersQ:Groups",Message_Reply.sender.user_id) then
+devs = "المطور الثانوي ،" else devs = "" end
 if Redis:sismember(TheSharrawy.."Sharrawy:Developers:Groups",UserId_Info.id) then
 dev = "المطور ،" else dev = "" end
 if Redis:sismember(TheSharrawy.."Sharrawy:TheBasics:Group"..msg_chat_id, UserId_Info.id) then
@@ -8031,6 +8036,7 @@ if msg.ControllerBot then
 if Rink == 1 or Rink < 1 then
 return LuaTele.sendText(msg_chat_id,msg_id,"\n*⋄︙لا يمكن تنزيل رتبه نفس رتبتك ولا اعلى من رتبتك *","md",true)  
 end
+Redis:srem(TheSharrawy.."Sharrawy:DevelopersQ:Groups",UserId_Info.id)
 Redis:srem(TheSharrawy.."Sharrawy:Developers:Groups",UserId_Info.id)
 Redis:srem(TheSharrawy.."Sharrawy:TheBasics:Group"..msg_chat_id, UserId_Info.id)
 Redis:srem(TheSharrawy.."Sharrawy:Originators:Group"..msg_chat_id, UserId_Info.id)
@@ -8073,7 +8079,7 @@ return LuaTele.sendText(msg_chat_id,msg_id,"\n*⋄︙لا يمكن تنزيل ر
 end
 Redis:srem(TheSharrawy.."Sharrawy:Distinguished:Group"..msg_chat_id, UserId_Info.id)
 end
-return LuaTele.sendText(msg_chat_id,msg_id,"\n*⋄︙تم تنزيل الشخص من الرتب التاليه { "..dev..""..crr..""..cr..""..own..""..mod..""..vip.." *}","md",true)  
+return LuaTele.sendText(msg_chat_id,msg_id,"\n*⋄︙تم تنزيل الشخص من الرتب التاليه { "..dev..""..devs..""..crr..""..cr..""..own..""..mod..""..vip.." *}","md",true)  
 end
 
 if text == ('رفع مشرف') and msg.reply_to_message_id ~= 0 then
@@ -8668,8 +8674,8 @@ end
 return LuaTele.sendText(msg_chat_id,msg_id,"["..text.."]","md",true)  
 end
 if text == "اضف رد للكل" then 
-if not msg.ControllerBot then 
-return LuaTele.sendText(msg_chat_id,msg_id,'\n*⋄︙هاذا الامر يخص { '..Controller_Num(1)..' }* ',"md",true)  
+if not msg.DevelopersQ then 
+return LuaTele.sendText(msg_chat_id,msg_id,'\n*⋄︙هاذا الامر يخص { '..Controller_Num(3)..' }* ',"md",true)  
 end
 if ChannelJoin(msg) == false then
 local reply_markup = LuaTele.replyMarkup{type = 'inline',data = {{{text = 'اضغط للاشتراك', url = 't.me/'..Redis:get(TheSharrawy..'Sharrawy:Channel:Join')}, },}}
@@ -8679,8 +8685,8 @@ Redis:set(TheSharrawy.."Sharrawy:Set:Rd"..msg.sender.user_id..":"..msg_chat_id,t
 return LuaTele.sendText(msg_chat_id,msg_id,"⋄︙ارسل الان الكلمه لاضافتها في ردود المطور ","md",true)  
 end
 if text == "حذف رد للكل" then 
-if not msg.ControllerBot then 
-return LuaTele.sendText(msg_chat_id,msg_id,'\n*⋄︙هاذا الامر يخص { '..Controller_Num(1)..' }* ',"md",true)  
+if not msg.DevelopersQ then 
+return LuaTele.sendText(msg_chat_id,msg_id,'\n*⋄︙هاذا الامر يخص { '..Controller_Num(3)..' }* ',"md",true)  
 end
 if ChannelJoin(msg) == false then
 local reply_markup = LuaTele.replyMarkup{type = 'inline',data = {{{text = 'اضغط للاشتراك', url = 't.me/'..Redis:get(TheSharrawy..'Sharrawy:Channel:Join')}, },}}
@@ -8690,7 +8696,7 @@ Redis:set(TheSharrawy.."Sharrawy:Set:On"..msg.sender.user_id..":"..msg_chat_id,t
 return LuaTele.sendText(msg_chat_id,msg_id,"⋄︙ارسل الان الكلمه لحذفها من ردود المطور","md",true)  
 end
 if text=="اذاعه خاص" then 
-if not msg.ControllerBot then 
+if not msg.DevelopersQ then 
 return LuaTele.sendText(msg_chat_id,msg_id,'\n*⋄︙هاذا الامر يخص { '..Controller_Num(1)..' }* ',"md",true)  
 end
 if ChannelJoin(msg) == false then
@@ -8710,7 +8716,7 @@ return false
 end
 
 if text=="اذاعه" then 
-if not msg.ControllerBot then 
+if not msg.DevelopersQ then 
 return LuaTele.sendText(msg_chat_id,msg_id,'\n*⋄︙هاذا الامر يخص { '..Controller_Num(1)..' }* ',"md",true)  
 end
 if ChannelJoin(msg) == false then
@@ -8730,7 +8736,7 @@ return false
 end
 
 if text=="اذاعه بالتثبيت" then 
-if not msg.ControllerBot then 
+if not msg.DevelopersQ then 
 return LuaTele.sendText(msg_chat_id,msg_id,'\n*⋄︙هاذا الامر يخص { '..Controller_Num(1)..' }* ',"md",true)  
 end
 if ChannelJoin(msg) == false then
@@ -8750,7 +8756,7 @@ return false
 end
 
 if text=="اذاعه بالتوجيه" then 
-if not msg.ControllerBot then 
+if not msg.DevelopersQ then 
 return LuaTele.sendText(msg_chat_id,msg_id,'\n*⋄︙هاذا الامر يخص { '..Controller_Num(1)..' }* ',"md",true)  
 end
 if ChannelJoin(msg) == false then
@@ -8763,7 +8769,7 @@ return false
 end
 
 if text=="اذاعه خاص بالتوجيه" then 
-if not msg.ControllerBot then 
+if not msg.DevelopersQ then 
 return LuaTele.sendText(msg_chat_id,msg_id,'\n*⋄︙هاذا الامر يخص { '..Controller_Num(1)..' }* ',"md",true)  
 end
 if ChannelJoin(msg) == false then
@@ -9241,14 +9247,14 @@ end
 if text == (Redis:get(TheSharrawy.."Sharrawy:Name:Bot") or "شعراوي") then
 local NamesBot = (Redis:get(TheSharrawy.."Sharrawy:Name:Bot") or "شعراوي")
 local NameBots = {
-"عمر "..NamesBot.. " شتريد؟",
+"اهلا "..NamesBot.. " شتريد؟",
 }
 return LuaTele.sendText(msg_chat_id,msg_id, NameBots[math.random(#NameBots)],"md",true)  
 end
 if text == "بوت" then
 local NamesBot = (Redis:get(TheSharrawy.."Sharrawy:Name:Bot") or "شعراوي")
 local BotName = {
-"عمر "..NamesBot.. " شتريد؟",
+"اهلا "..NamesBot.. " شتريد؟",
 }
 return LuaTele.sendText(msg_chat_id,msg_id,BotName[math.random(#BotName)],"md",true)   
 end
