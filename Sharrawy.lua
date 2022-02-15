@@ -4419,9 +4419,9 @@ y = 0
 r = 1048576
 for i=1,250 do
 r = r + 1048576
-Delmsg = bot.getMessage(msg.chat_id,msgid + r)
+Delmsg = LuaTele.getMessage(msg.chat_id,msgid + r)
 if Delmsg and Delmsg.edit_date and Delmsg.edit_date ~= 0 then
-bot.deleteMessages(msg.chat_id,{[1]= Delmsg.id}) 
+LuaTele.deleteMessages(msg.chat_id,{[1]= Delmsg.id}) 
 y = y + 1
 end
 end
@@ -4439,9 +4439,9 @@ y = 0
 r = 1048576
 for i=1,250 do
 r = r + 1048576
-Delmsg = bot.getMessage(msg.chat_id,msgid + r)
+Delmsg = LuaTele.getMessage(msg.chat_id,msgid + r)
 if Delmsg and Delmsg.content and Delmsg.content.luatele ~= "messageText" then
-bot.deleteMessages(msg.chat_id,{[1]= Delmsg.id}) 
+LuaTele.deleteMessages(msg.chat_id,{[1]= Delmsg.id}) 
 y = y + 1
 end
 end
