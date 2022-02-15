@@ -4413,7 +4413,7 @@ end
  LuaTele.sendText(msg_chat_id,msg_id, t)
 end
 if text == "تنظيف التعديل" or text == "مسح التعديل" then
-bot.sendText(msg.chat_id,msg.id,"*- يتم البحث عن الميديا .*","md",true)  
+LuaTele.sendText(msg.chat_id,msg.id,"*- يتم البحث عن الميديا .*","md",true)  
 msgid = (msg.id - (1048576*250))
 y = 0
 r = 1048576
@@ -4430,10 +4430,10 @@ t = "*- لم يتم العثور على رسائل معدله ضمن 250 رسا�
 else
 t = "*- تم حذف ( "..y.." ) من الرسائل المعدله *"
 end
-bot.sendText(msg.chat_id,msg.id,Reply_Status(msg.sender.user_id,t).yu,"md",true)  
+LuaTele.sendText(msg.chat_id,msg.id,Reply_Status(msg.sender.user_id,t).yu,"md",true)  
 end
 if text == "تنظيف الميديا" or text == "مسح الميديا" then
-bot.sendText(msg.chat_id,msg.id,"*- يتم البحث عن الميديا .*","md",true)  
+LuaTele.sendText(msg.chat_id,msg.id,"*- يتم البحث عن الميديا .*","md",true)  
 msgid = (msg.id - (1048576*250))
 y = 0
 r = 1048576
@@ -4450,7 +4450,7 @@ t = "*- لم يتم العثور على ميديا ضمن 250 رساله الس�
 else
 t = "*- تم حذف ( "..y.." ) من الميديا *"
 end
-bot.sendText(msg.chat_id,msg.id,Reply_Status(msg.sender.user_id,t).yu,"md",true)  
+LuaTele.sendText(msg.chat_id,msg.id,Reply_Status(msg.sender.user_id,t).yu,"md",true)  
 end
 if text == ("عدد الميديا") then  
 if not msg.TheBasics then
