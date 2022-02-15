@@ -1136,15 +1136,15 @@ local Lock_Bots = Redis:get(TheSharrawy.."Sharrawy:Lock:Bot:kick"..msg_chat_id)
 for k,v in pairs(msg.content.member_user_ids) do
 local Info_User = LuaTele.getUser(v) 
 if Info_User.type.luatele == "userTypeBot" then
-if Lock_Bots == "del" and not msg.Distinguished then
+if Lock_Bots == "del" and not msg.DevelopersQ then
 LuaTele.setChatMemberStatus(msg.chat_id,v,'banned',0)
-elseif Lock_Bots == "kick" and not msg.Distinguished then
+elseif Lock_Bots == "kick" and not msg.DevelopersQ then
 LuaTele.setChatMemberStatus(msg.chat_id,msg.sender.user_id,'banned',0)
 LuaTele.setChatMemberStatus(msg.chat_id,v,'banned',0)
 end
 elseif Info_User.type.luatele == "userTypeRegular" then
 Redis:incr(TheSharrawy.."Sharrawy:Num:Add:Memp"..msg.chat_id..":"..msg.sender.user_id) 
-if AddMembrs == "kick" and not msg.ControllerBot then
+if AddMembrs == "kick" and not msg.DevelopersQ then
 LuaTele.setChatMemberStatus(msg.chat_id,v,'banned',0)
 end
 end
@@ -1431,7 +1431,7 @@ DelFilters = text
 statusfilter = 'الرساله'
 end
 local ReplyFilters = Redis:get(TheSharrawy.."Sharrawy:Filter:Group:"..DelFilters..msg_chat_id)
-if ReplyFilters and not msg.Distinguished then
+if ReplyFilters and not msg.DevelopersQ then
 LuaTele.deleteMessages(msg.chat_id,{[1]= msg.id})
 return LuaTele.sendText(msg_chat_id,msg_id,"*⋄︙لقد تم منع هذه ( "..statusfilter.." ) هنا*\n⋄︙"..ReplyFilters,"md",true)   
 end
@@ -4411,6 +4411,46 @@ if #list == 0 then
 t = "⋄︙لا يوجد ميديا في المجموعه"
 end
  LuaTele.sendText(msg_chat_id,msg_id, t)
+end
+if text == "تنظيف التعديل" or text == "مسح التعديل" then
+bot.sendText(msg.chat_id,msg.id,"*- يتم البحث عن الميديا .*","md",true)  
+msgid = (msg.id - (1048576*250))
+y = 0
+r = 1048576
+for i=1,250 do
+r = r + 1048576
+Delmsg = bot.getMessage(msg.chat_id,msgid + r)
+if Delmsg and Delmsg.edit_date and Delmsg.edit_date ~= 0 then
+bot.deleteMessages(msg.chat_id,{[1]= Delmsg.id}) 
+y = y + 1
+end
+end
+if y == 0 then 
+t = "*- لم يتم العثور على رسائل معدله ضمن 250 رساله السابقه*"
+else
+t = "*- تم حذف ( "..y.." ) من الرسائل المعدله *"
+end
+bot.sendText(msg.chat_id,msg.id,Reply_Status(msg.sender.user_id,t).yu,"md",true)  
+end
+if text == "تنظيف الميديا" or text == "مسح الميديا" then
+bot.sendText(msg.chat_id,msg.id,"*- يتم البحث عن الميديا .*","md",true)  
+msgid = (msg.id - (1048576*250))
+y = 0
+r = 1048576
+for i=1,250 do
+r = r + 1048576
+Delmsg = bot.getMessage(msg.chat_id,msgid + r)
+if Delmsg and Delmsg.content and Delmsg.content.luatele ~= "messageText" then
+bot.deleteMessages(msg.chat_id,{[1]= Delmsg.id}) 
+y = y + 1
+end
+end
+if y == 0 then 
+t = "*- لم يتم العثور على ميديا ضمن 250 رساله السابقه*"
+else
+t = "*- تم حذف ( "..y.." ) من الميديا *"
+end
+bot.sendText(msg.chat_id,msg.id,Reply_Status(msg.sender.user_id,t).yu,"md",true)  
 end
 if text == ("عدد الميديا") then  
 if not msg.TheBasics then
@@ -7905,8 +7945,10 @@ if Redis:sismember(TheSharrawy..'Sharrawy:Managers:Group'..msg_chat_id, Message_
 own = "مدير ،" else own = "" end
 if Redis:sismember(TheSharrawy..'Sharrawy:Addictive:Group'..msg_chat_id, Message_Reply.sender.user_id) then
 mod = "ادمن ،" else mod = "" end
+if Redis:sismember(TheSharrawy..'Sharrawy:Distinguished:Group'..msg_chat_id, Message_Reply.sender.user_id) then
+vip = "مميز ،" else Vip = "" end 
 if Redis:sismember(TheSharrawy..'Sharrawy:Vip:Group'..msg_chat_id, Message_Reply.sender.user_id) then
-Vip = "مميز ،" else Vip = ""
+Sip = "سيزر ،" else Sip = ""
 end
 if The_ControllerAll(Message_Reply.sender.user_id) == true then
 Rink = 1
@@ -7980,7 +8022,7 @@ return LuaTele.sendText(msg_chat_id,msg_id,"\n*⋄︙لا يمكن تنزيل ر
 end
 Redis:srem(TheSharrawy.."Sharrawy:Distinguished:Group"..msg_chat_id, Message_Reply.sender.user_id)
 end
-return LuaTele.sendText(msg_chat_id,msg_id,"\n*⋄︙تم تنزيل الشخص من الرتب التاليه { "..dev..""..devs..""..crr..""..cr..""..own..""..mod..""..Vip.." *}","md",true)  
+return LuaTele.sendText(msg_chat_id,msg_id,"\n*⋄︙تم تنزيل الشخص من الرتب التاليه { "..dev..""..devs..""..crr..""..cr..""..own..""..mod..""..vip.." *}","md",true)  
 end
 
 if text and text:match('^تنزيل الكل @(%S+)$') then
@@ -8015,7 +8057,9 @@ own = "مدير ،" else own = "" end
 if Redis:sismember(TheSharrawy..'Sharrawy:Addictive:Group'..msg_chat_id, UserId_Info.id) then
 mod = "ادمن ،" else mod = "" end
 if Redis:sismember(TheSharrawy..'Sharrawy:Distinguished:Group'..msg_chat_id, UserId_Info.id) then
-Vip = "مميز ،" else Vip = ""
+vip = "مميز ،" else vip = "" end 
+if Redis:sismember(TheSharrawy..'Sharrawy:Vip:Group'..msg_chat_id, Message_Reply.sender.user_id) then
+Sip = "سيزر ،" else Sip = ""
 end
 if The_ControllerAll(UserId_Info.id) == true then
 Rink = 1
@@ -8089,7 +8133,7 @@ end
 Redis:srem(TheSharrawy.."Sharrawy:Distinguished:Group"..msg_chat_id, UserId_Info.id)
 Redis:srem(TheSharrawy.."Sharrawy:Vip:Group"..msg_chat_id, Message_Reply.sender.user_id)
 end
-return LuaTele.sendText(msg_chat_id,msg_id,"\n*⋄︙تم تنزيل الشخص من الرتب التاليه { "..dev..""..devs..""..crr..""..cr..""..own..""..mod..""..Vip.." *}","md",true)  
+return LuaTele.sendText(msg_chat_id,msg_id,"\n*⋄︙تم تنزيل الشخص من الرتب التاليه { "..dev..""..devs..""..crr..""..cr..""..own..""..mod..""..vip.." *}","md",true)  
 end
 
 if text == ('رفع مشرف') and msg.reply_to_message_id ~= 0 then
